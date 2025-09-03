@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Project: Perspective and Focal Length</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            font-size: 2.4em;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .part {
+            margin: 50px 0;
+            padding: 30px 0;
+        }
+
+        .part:not(:last-child) {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .part-number {
+            font-size: 0.9em;
+            color: #999;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            font-weight: 400;
+            color: #222;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 1.05em;
+            line-height: 1.7;
+            color: #444;
+            margin-bottom: 40px;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .image-placeholder {
+            background: #f5f5f5;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+            color: #777;
+            text-align: center;
+            transition: border-color 0.2s ease;
+        }
+
+        .image-placeholder:hover {
+            border-color: #bbb;
+        }
+
+        .two-images .image-placeholder {
+            width: 300px;
+            height: 300px;
+        }
+
+        .three-images .image-placeholder {
+            width: 240px;
+            height: 180px;
+        }
+
+        .gif-placeholder {
+            width: 350px;
+            height: 220px;
+        }
+
+        .vs-separator {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #888;
+            padding: 0 10px;
+        }
+
+        .think-about {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+            font-style: italic;
+            color: #555;
+            border-left: 3px solid #ddd;
+        }
+
+        .cinema-note {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .image-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .vs-separator {
+                transform: rotate(90deg);
+            }
+
+            .image-placeholder {
+                width: 100% !important;
+                max-width: 300px;
+                height: 300px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Becoming Friends with My Camera</h1>
+        <p class="subtitle">Perspective and Focal Length</p>
+    </header>
+
+    <!-- Part 1: Selfie -->
+    <section class="part">
+        <div class="part-number">Part 1</div>
+        <h2>Selfie: The Wrong Way vs. The Right Way</h2>
+        
+        <div class="description">
+            For the first part, I took two selfies of myself. The first picture is very close to the camera with a camera setting of 0.5x. It looks typical for a phone selfie: my nose and cap appear large, and my facial proportions look distorted. 
+            For the second photo, I stepped back several feet, zoomed in to 5x, and framed my face at the same size. This second photo looks much more natural and flattering.
+             </div>
+
+        <div class="image-container two-images">
+                <img src="./media/img1.JPG" alt="Close-up selfie showing distortion" style="width: 300px; height: 300px; object-fit: cover; border-radius: 8px;">
+                <div class="vs-separator">vs</div>
+                <img src="./media/img2.JPG" alt="Close-up selfie showing distortion" style="width: 300px; height: 300px; object-fit: cover; border-radius: 8px;">
+            </div>
+        </div>
+
+        <div class="think-about">
+            The distortion in the close-up selfie happens because of perspective. 
+            When the camera is very close, nearby features like the nose are much closer to the lens than the ears, making them appear disproportionately large. 
+            Stepping back and zooming in reduces this effect because the relative distances between nose, eyes, and ears are small compared to the overall camera distance. 
+            This gives a more natural rendering of the face.
+            <p>
+            <strong>
+                Technically, using a longer focal length (via zoom) narrows the field of view and minimizes perspective distortion, resulting in a more natural-looking portrait.
+            </strong>
+        </div>
+    </section>
+
+    <!-- Part 2: Architectural Perspective -->
+    <section class="part">
+        <div class="part-number">Part 2</div>
+        <h2>Architectural Perspective Compression</h2>
+        
+        <div class="description">
+            For the second part, I chose the Campanile on UC Berkeley campus. 
+            I first stood far away, zoomed in, and took a photo of the tower. 
+            The image looks “flattened” — the background and the tower seem closer together, and the depth of the street is compressed. 
+            Then I walked closer, took another shot without zoom, and framed the Campanile to the same size. 
+            In this photo, the sense of depth is much stronger, and the space feels more open.
+        </div>
+
+        <div class="image-container two-images">
+                <img src="./media/img4.JPG" alt="Close-up selfie showing distortion" style="width: 300px; height: 400px; object-fit: cover; border-radius: 8px;">
+            <div class="vs-separator">vs</div>
+                <img src="./media/img3.JPG" alt="Close-up selfie showing distortion" style="width: 300px; height: 400px; object-fit: cover; border-radius: 8px;">
+            </div>
+        </div>
+
+        <div class="think-about">
+            Standing far away and zooming in reduces the differences in relative distances between foreground and background, which makes objects appear closer together (compression). 
+            Moving closer with a wide lens exaggerates the relative distance differences, so the foreground seems larger and the background farther away.
+           <p>
+            <strong>
+                In technical terms, a long focal length compresses depth (telephoto effect), while a short focal length expands depth and exaggerates perspective.
+            </strong>
+        </div>
+    </section>
+
+    <!-- Part 3: Dolly Zoom -->
+    <section class="part">
+        <div class="part-number">Part 3</div>
+        <h2>The Dolly Zoom</h2>
+        
+        <div class="description">
+            For the final part, I used the orange in my garden as my subject. I walked toward the orange while zooming out at the same time, trying to keep the orange the same size in the frame. The result is the classic “dolly zoom” effect: the orange stays fixed in size, but the background stretches and shifts dramatically, giving a cinematic and somewhat surreal feeling.
+        </div>
+
+        <div class="image-container">
+            <img src="./media/gif.gif" alt="Dolly zoom effect demonstration" style="width: 480px; height: 360px; object-fit: cover; border-radius: 8px;">
+        </div>
+
+        <div class="think-about">
+            By moving forward, the perspective makes the background expand and shift, while zooming out compensates for the change in subject size. Since the subject remains constant in scale but the perspective changes, our brain perceives an unsettling shift in spatial relationships — which is why filmmakers use it to create tension or unease.
+        <p>
+        <strong>
+            Technically, this works because changing camera distance alters perspective geometry, while simultaneously adjusting focal length keeps subject magnification constant but changes how much of the background is projected into the frame.
+        </strong>
+        </div>
+    </section>
+
+    <footer>
+        <p>CS180 - Project 1 - Melchior Kaeppel</p>
+    </footer>
+</body>
+</html>

@@ -1,16 +1,232 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My CS180 Portfolio</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        h1 {
+            font-size: 2.4em;
+            font-weight: 300;
+            color: #222;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .project-card {
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .project-card:hover {
+            border-color: #bbb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-number {
+            font-size: 0.9em;
+            color: #999;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .project-card h2 {
+            font-size: 1.5em;
+            font-weight: 400;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .project-description {
+            font-size: 1em;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .project-status {
+            font-size: 0.85em;
+            padding: 6px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background: #e6f7e6;
+            color: #2d5016;
+        }
+
+        .status-in-progress {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-upcoming {
+            background: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .intro-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 40px;
+            border-left: 3px solid #ddd;
+        }
+
+        .intro-section h3 {
+            font-size: 1.3em;
+            font-weight: 400;
+            color: #222;
+            margin-bottom: 15px;
+        }
+
+        .intro-section p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .projects-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .project-card {
+                padding: 25px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to My CS180 Portfolio!</h1>
-    <a href="./1/index.html">Project 1</a>
+    <header>
+        <h1>My CS180 Portfolio</h1>
+        <p class="subtitle">Computer Vision and Computational Photography</p>
+    </header>
+
+    <div class="intro-section">
+        <h3>Welcome to my CS180 Portfolio</h3>
+        <p>This portfolio showcases my work in Intro to Computer Vision and Computational Photography. Each project explores different aspects of image processing, from basic manipulations to advanced methods.</p>
+    </div>
+
+    <div class="projects-container">
+        <a href="./0/index.html" class="project-card">
+            <div class="project-number">Project 0</div>
+            <h2>Becoming Friends with My Camera</h2>
+            <p class="project-description">
+                This project explores how camera distance, focal length, and perspective interact to shape the way people, architecture, and objects appear in photos.
+            </p>
+            <div class="project-status status-completed">Completed</div>
+        </a>
+
+        <!-- <div class="project-card" style="opacity: 0.6; cursor: not-allowed;">
+            <div class="project-number">Project 2</div>
+            <h2>Image Filtering</h2>
+            <p class="project-description">
+                Working with convolution operations, edge detection, and various filtering techniques to manipulate and enhance digital images.
+            </p>
+            <div class="project-status status-upcoming">Upcoming</div>
+        </div>
+
+        <div class="project-card" style="opacity: 0.6; cursor: not-allowed;">
+            <div class="project-number">Project 3</div>
+            <h2>Frequency Domain</h2>
+            <p class="project-description">
+                Exploring image processing in the frequency domain using Fourier transforms and frequency-based filtering methods.
+            </p>
+            <div class="project-status status-upcoming">Upcoming</div>
+        </div>
+
+        <div class="project-card" style="opacity: 0.6; cursor: not-allowed;">
+            <div class="project-number">Project 4</div>
+            <h2>Image Warping</h2>
+            <p class="project-description">
+                Learning geometric transformations, image warping techniques, and their applications in computational photography.
+            </p>
+            <div class="project-status status-upcoming">Upcoming</div>
+        </div>
+
+        <div class="project-card" style="opacity: 0.6; cursor: not-allowed;">
+            <div class="project-number">Project 5</div>
+            <h2>Face Morphing</h2>
+            <p class="project-description">
+                Creating smooth transitions between faces using correspondence points and morphing algorithms.
+            </p>
+            <div class="project-status status-upcoming">Upcoming</div>
+        </div>
+
+        <div class="project-card" style="opacity: 0.6; cursor: not-allowed;">
+            <div class="project-number">Project 6</div>
+            <h2>Image Blending</h2>
+            <p class="project-description">
+                Advanced techniques for seamlessly combining multiple images using gradient domain methods and multi-resolution blending.
+            </p>
+            <div class="project-status status-upcoming">Upcoming</div>
+        </div>
+    </div> -->
+
+    <footer>
+        <p>CS180 Portfolio - Fall 2025 - Melchior Kaeppel</p>
+    </footer>
 </body>
 </html>
