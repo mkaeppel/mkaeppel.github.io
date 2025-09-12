@@ -34,7 +34,7 @@
     <section class="u-clearfix u-section-1" id="block-1">
       <div class="u-clearfix u-sheet u-sheet-1">
         <h4 class="u-text u-text-default u-text-1">Introduction</h4>
-        <p class="u-align-justify u-text u-text-default u-text-2">In the early 20th century, Sergei Mikhailovich Prokudin-Gorskii pioneered one of the first large-scale attempts at color photography. His method was to capture three separate exposures of the same scene through red, green, and blue filters, storing them as stacked glass plate negatives. Although his vision of color projection never materialized during his lifetime, the collection survived and was later digitized by the Library of Congress, preserving a vivid record of the Russian Empire.
+        <p class="u-align-justify u-text u-text-2">In the early 20th century, Sergei Mikhailovich Prokudin-Gorskii pioneered one of the first large-scale attempts at color photography. His method was to capture three separate exposures of the same scene through red, green, and blue filters, storing them as stacked glass plate negatives. Although his vision of color projection never materialized during his lifetime, the collection survived and was later digitized by the Library of Congress, preserving a vivid record of the Russian Empire.
 The objective of this project is to reconstruct these digitized images into realistic color photographs using image processing techniques. This involves splitting the glass plate scans into their three channels, aligning them under the assumption of simple x- and y-translations, and stacking them to form RGB images with minimal artifacts. A naive alignment method will be applied to small images first, followed by a more efficient multi-scale approach suitable for high-resolution scans.
 This report is organized into four chapters: Introduction presents the historical and technical background, Methods explains the alignment algorithms and metrics, Results shows the reconstructed images and quantitative outcomes, and Discussion reflects on challenges, limitations, and possible extensions.</p>
       </div>
@@ -44,10 +44,10 @@ This report is organized into four chapters: Introduction presents the historica
         <h4 class="u-text u-text-default u-text-1">Methods</h4>
         <div class="fr-view u-align-left u-clearfix u-rich-text u-text u-text-2">
           <p>To evaluate the similarity between channels, I implemented two metrics: The L2 norm (Sum of Squared Differences, SSD) and Normalized Cross-Correlation (NCC).&nbsp;</p>
-          <p>The SSD calculates the squared difference of pixel intensities between two images I1 and I2 and selects the alignment with the smallest error. This works well when the brightness levels are comparable across channels.&nbsp;<img src="images/4.png" style="width: 344px;" class="fr-dib fr-fic">In contrast, NCC normalizes &nbsp;the intensity values before comparison (L2 norm in the denominator) and computes their dot product, making it more robust to differences in exposure or contrast between the red, green, and blue images.
+          <p>The SSD calculates the squared difference of pixel intensities between two images I1 and I2 and selects the alignment with the smallest error. This works well when the brightness levels are comparable across channels.&nbsp;<img src="blob:https://app.desktop.nicepage.com/1862a296-fb4c-4dcd-816f-2c596085eff7" style="width: 344px;" class="fr-dib fr-fic">In contrast, NCC normalizes &nbsp;the intensity values before comparison (L2 norm in the denominator) and computes their dot product, making it more robust to differences in exposure or contrast between the red, green, and blue images.
           </p>
           <p>
-            <img src="images/5.png" style="width: 216px;" class="fr-dib fr-fic">
+            <img src="blob:https://app.desktop.nicepage.com/293c50ac-f35f-480d-a4a7-a3c78ef92333" style="width: 216px;" class="fr-dib fr-fic">
           </p>
           <p>Based on these metrics, I first used an exhaustive search approach for alignment. Within a fixed displacement window, each possible shift of the target channel relative to the reference channel was evaluated. The displacement that minimized the L2 error or maximized the NCC score was chosen as the best alignment. Although straightforward and reliable for small images, this method becomes prohibitively slow when applied to high-resolution scans due to the large number of possible shifts.&nbsp;</p>
           <p>To handle larger images efficiently, an image pyramid method was implemented. The basic idea is to create progressively downsampled versions of the input images and begin the alignment process at the coarsest level. At this scale, large displacements in the original images correspond to only small shifts, which makes it possible to search over a reduced displacement range. Once an approximate alignment is found at this coarse resolution, the estimated displacement is scaled up to the next finer level and used as an initial guess. At this level, the algorithm no longer needs to search over the full displacement window; instead, it only refines the estimate within a small neighborhood around the upscaled shift. This process is repeated level by level until the original full resolution is reached.</p>
@@ -56,7 +56,7 @@ This report is organized into four chapters: Introduction presents the historica
           </p>
           <p>Step 1: Scale=1/16, shape=(160, 182), max_disp=7<br>
             <br>
-            <img src="images/6.jpeg" style="width: 77px;" class="fr-dib fr-fic">
+            <img src="images/4.jpeg" style="width: 82px;" class="fr-dib fr-fic">
           </p>
           <p>Step 2: Scale=1/8, shape=(320, 364), max_disp=15</p>
           <p>
@@ -64,11 +64,10 @@ This report is organized into four chapters: Introduction presents the historica
           </p>
           <p>Step 3: Scale=1/4, shape=(640, 727), max_disp=30</p>
           <p>
-            <img src="images/8.jpeg" style="width: 288px;" class="fr-dib fr-fic">
+            <img src="images/5.jpeg" style="width: 300px;" class="fr-dib fr-fic">Step 3: Scale=1/2, shape=(1280, 1454), max_disp=60
           </p>
-          <p>Step 3: Scale=1/2, shape=(1280, 1454), max_disp=60</p>
           <p>
-            <img src="images/7.jpeg" style="width: 505px;" class="fr-dib fr-fic">
+            <img src="images/6.jpeg" style="width: 531px;" class="fr-dib fr-fic">
           </p>
           <p>Step 4: Scale=1/1, shape=(2561, 2907), max_disp=120</p>
           <p style="text-align: center;">On the original sized image</p>
@@ -81,7 +80,7 @@ This report is organized into four chapters: Introduction presents the historica
     <section class="u-clearfix u-section-3" id="block-2">
       <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
         <h4 class="u-text u-text-default u-text-1">Results</h4>
-        <h5 class="u-text u-text-default u-text-2">Single Scale Alignment</h5>
+        <h5 class="u-text u-text-2">Single Scale Alignment</h5>
         <p class="u-text u-text-default u-text-3">The results of the NCC single scale alignment is shown and their corresponding best shift as (dx, dy). In the examples below SSD and NCC performed the same. Therefore only NCC and it's best shifts are displayed. In general, NCC is performs more computations than the L2-norm and is therefore slightly slower than the L2-norm calculation.</p>
         <div class="u-expanded-width u-list u-list-1">
           <div class="u-repeater u-repeater-1">
@@ -166,40 +165,53 @@ This report is organized into four chapters: Introduction presents the historica
                 <p class="u-align-left u-text u-text-27"> Best Shift:<br>Green: (2, -3)<br>Red: (2, 3)
                 </p>
                 <img alt="" class="u-expanded-width u-image u-image-default u-image-12" data-image-width="2971" data-image-height="2567" src="images/three_generations_ncc_green_dxdy1453_red_dxdy11112_15.9s.jpg">
-                <h4 class="u-align-left u-text u-text-default u-text-28">Three Generations</h4>
+                <h4 class="u-align-left u-text u-text-28">Three Generations</h4>
                 <p class="u-align-left u-text u-text-29"> Best Shift:<br>Green: (14, 58)<br>Red: (11, 112
+                </p>
+                <img alt="" class="custom-expanded u-expanded-width u-image u-image-default u-image-13" data-image-width="2964" data-image-height="2579" src="images/Trees_ncc_green_dxdy-4175_red_dxdy-67113_18.0s.jpg">
+                <h4 class="u-align-left u-text u-text-default u-text-30">Extra: Trees</h4>
+                <p class="u-align-left u-text u-text-31"> Best Shift:<br>Green: (-41, 75)<br>Red: (-67, 113)
                 </p>
               </div>
             </div>
             <div class="u-container-style u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-8">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-13" data-image-width="3023" data-image-height="2595" src="images/lugano_ncc_green_dxdy-1641_red_dxdy-2992_16.37s.jpg">
-                <h4 class="u-align-left u-text u-text-default u-text-30">Lugano</h4>
-                <p class="u-align-left u-text u-text-31"> Best Shift:<br>Green: (-16, 41)<br>Red: (-29, 92)
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-14" data-image-width="3023" data-image-height="2595" src="images/lugano_ncc_green_dxdy-1641_red_dxdy-2992_16.37s.jpg">
+                <h4 class="u-align-left u-text u-text-default u-text-32">Lugano</h4>
+                <p class="u-align-left u-text u-text-33"> Best Shift:<br>Green: (-16, 41)<br>Red: (-29, 92)
                 </p>
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-14" data-image-width="3048" data-image-height="2600" src="images/self_portrait_ncc_green_dxdy2978_red_dxdy37176_15.56s.jpg">
-                <h4 class="u-align-left u-text u-text-default u-text-32">Self Portrait</h4>
-                <p class="u-align-left u-text u-text-33"> Best Shift:<br>Green: (29, 78)<br>Red: (37, 176)
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-15" data-image-width="3048" data-image-height="2600" src="images/self_portrait_ncc_green_dxdy2978_red_dxdy37176_15.56s.jpg">
+                <h4 class="u-align-left u-text u-text-default u-text-34">Self Portrait</h4>
+                <p class="u-align-left u-text u-text-35"> Best Shift:<br>Green: (29, 78)<br>Red: (37, 176)
                 </p>
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-15" data-image-width="316" data-image-height="272" src="images/tobolsk_ncc_green_dxdy33_red_dxdy36_12.57s.jpg">
-                <h4 class="u-align-left u-text u-text-default u-text-34">Tobolsk</h4>
-                <p class="u-align-left u-text u-text-35"> Best Shift:<br>Green: (3, 3)<br>Red: (3, 6)
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-16" data-image-width="316" data-image-height="272" src="images/tobolsk_ncc_green_dxdy33_red_dxdy36_12.57s.jpg">
+                <h4 class="u-align-left u-text u-text-36">Tobolsk</h4>
+                <p class="u-align-left u-text u-text-37"> Best Shift:<br>Green: (3, 3)<br>Red: (3, 6)
+                </p>
+                <img alt="" class="custom-expanded u-expanded-width u-image u-image-default u-image-17" data-image-width="3053" data-image-height="2603" src="images/Flowers_ncc_green_dxdy1924_red_dxdy40121_17.97s.jpg">
+                <h4 class="u-align-left u-text u-text-default u-text-38">Extra: Flowers</h4>
+                <p class="u-align-left u-text u-text-39"> Best Shift:<br>Green: (19,24)<br>Red: (40,121)
                 </p>
               </div>
             </div>
             <div class="u-container-style u-list-item u-repeater-item">
               <div class="u-container-layout u-similar-container u-valign-top-lg u-valign-top-md u-valign-top-sm u-valign-top-xs u-container-layout-9">
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-16" data-image-width="3016" data-image-height="2592" src="images/melons_ncc_green_dxdy1081_red_dxdy13178_16.13s.jpg">
-                <h4 class="u-align-left u-text u-text-default u-text-36">Melons</h4>
-                <p class="u-align-left u-text u-text-37"> Best Shift:<br>Green: (10, 81)<br>Red: (13, 178)
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-18" data-image-width="3016" data-image-height="2592" src="images/melons_ncc_green_dxdy1081_red_dxdy13178_16.13s.jpg">
+                <h4 class="u-align-left u-text u-text-default u-text-40">Melons</h4>
+                <p class="u-align-left u-text u-text-41"> Best Shift:<br>Green: (10, 81)<br>Red: (13, 178)
                 </p>
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-17" data-image-width="3053" data-image-height="2600" src="images/siren_ncc_green_dxdy-649_red_dxdy-2595_15.89s.jpg">
-                <h4 class="u-align-left u-text u-text-default u-text-38">Siren</h4>
-                <p class="u-align-left u-text u-text-39"> Best Shift:<br>Green: (-6, 49)<br>Red: (-25, 95)
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-19" data-image-width="3053" data-image-height="2600" src="images/siren_ncc_green_dxdy-649_red_dxdy-2595_15.89s.jpg">
+                <h4 class="u-align-left u-text u-text-default u-text-42">Siren</h4>
+                <p class="u-align-left u-text u-text-43"> Best Shift:<br>Green: (-6, 49)<br>Red: (-25, 95)
                 </p>
-                <img alt="" class="u-expanded-width u-image u-image-default u-image-18" data-image-width="252" data-image-height="252" src="images/Bildschirmfoto2025-09-12um13.20.01.png">
-                <h4 class="u-align-left u-text u-text-default u-text-40">&nbsp;</h4>
-                <p class="u-align-left u-text u-text-41">&nbsp;</p>
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-20" data-image-width="3032" data-image-height="2592" src="images/VodopadGirvas_ncc_green_dxdy-113_red_dxdy-280_16.25s.jpg">
+                <h4 class="u-align-left u-text u-text-44">&nbsp;Extra: Vodopad Girvas</h4>
+                <p class="u-align-left u-text u-text-45">&nbsp;Best Shift:<br>Green: (-1, 13)<br>Red: (-2, 80)
+                </p>
+                <img alt="" class="u-expanded-width u-image u-image-default u-image-21" data-image-width="2955" data-image-height="2551" src="images/mosque_ncc_green_dxdy1026_red_dxdy1170_17.36s.jpg">
+                <h4 class="u-align-left u-text u-text-default u-text-46">Extra: Mosque</h4>
+                <p class="u-align-left u-text u-text-47"> Best Shift:<br>Green: (10, 26)<br>Red: (11, 70)
+                </p>
               </div>
             </div>
           </div>
@@ -224,6 +236,7 @@ This report is organized into four chapters: Introduction presents the historica
     <footer class="u-align-center u-clearfix u-container-align-center u-footer u-grey-40 u-footer" id="footer"><div class="u-clearfix u-sheet u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">CS 180 - Project 1 - Melchior Kaeppel </p>
       </div></footer>
+    <section class="u-backlink u-clearfix u-grey-80"> This <a href="https://nicepage.com/website-design">Website Design</a> was created with Nicepage 
     </section>
   
 </body></html>
