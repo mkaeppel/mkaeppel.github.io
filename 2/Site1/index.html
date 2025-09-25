@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="de"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Project_2</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 7.12.8, nicepage.com">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800">
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Project_2">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-home-page="Project_2.html" data-home-page-title="Project_2" data-path-to-root="./" data-include-products="false" class="u-body u-clearfix u-xl-mode" data-lang="de"><header class="u-clearfix u-header u-image u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-header" id="header" data-image-width="4671" data-image-height="2919"><div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-align-center u-text u-text-white u-text-1">CS180 ​-&nbsp;Project 2&nbsp;<span style="font-size: 0.625rem;"></span>
+          <br>
+          <br>Fun with Filters and Frequencies
+        </h4>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="block-1">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">Introduction</h4>
+        <p class="u-align-justify u-text u-text-2"> In this project, I explore the role of frequency-based filtering in computer vision and computational photography. The objective is to understand how different components of an image—edges, gradients, fine details, and smooth structures—can be manipulated through convolution, Gaussian and Laplacian filtering, and frequency separation. Starting with simple gradient operators for edge detection, I extend the approach to derivatives of Gaussians to combine noise suppression and differentiation. From there, I investigate image sharpening with unsharp masking, the creation of hybrid images that change interpretation with viewing distance, and multiresolution blending inspired by Burt and Adelson’s spline method. By constructing Gaussian and Laplacian stacks of both images and masks, I achieve seamless composites where transitions are smooth across frequency bands. This report is organized into sections covering the theory of filters and stacks, the implementation of hybrid images, the multiresolution blending procedure, and the resulting visual outcomes along with reflections on the effectiveness and limitations of these techniques. </p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="sec-3c83">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Part 1: Fun with Filters</h4>
+        <h5 class="u-text u-text-default u-text-2"> Part 1.1: Convolutions from Scratch</h5>
+        <img class="u-image u-image-default u-image-1" src="images/conv2loops.png" alt="" data-image-width="1482" data-image-height="794">
+        <img class="u-image u-image-default u-image-2" src="images/conv4loops.png" alt="" data-image-width="1482" data-image-height="794">
+        <p class="u-text u-text-default u-text-3">conv2d_4loops (left figure) computes the convolution by iterating over every position of the image and, within that, looping again over every element of the filter to multiply and accumulate values one by one. The right function (conv2d_2loops) also loops over image positions, but instead of looping over the filter elements it extracts the relevant patch of the padded image and multiplies it with the filter in one step, summing all contributions at once. This makes the second function noticeably faster, since it avoids two extra layers of iteration in Python and instead relies on array operations that are executed much more efficiently. It can be used in this section.</p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-3" id="sec-96e6">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> Part 1.2: Finite Difference Operator</h5>
+        <p class="u-text u-text-default u-text-2">Partial derivative in x and y</p>
+        <p class="u-text u-text-default u-text-3"> The partial derivatives are computed by convolving the image with small filters (Dx and Dy) that approximate differences in the horizontal and vertical directions. The resulting images highlight intensity changes: the derivative in x emphasizes vertical edges, while the derivative in y emphasizes horizontal edges.&nbsp;</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/cameraman_dxdy1.jpeg" alt="" data-image-width="6000" data-image-height="2400">
+        <p class="u-text u-text-default u-text-4"> Gradient magnitude</p>
+        <p class="u-text u-text-default u-text-5"> The gradient magnitude is computed by combining the horizontal and vertical derivatives using the formula \sqrt{(dI/dx)^2 + (dI/dy)^2}. The resulting image highlights edges regardless of their orientation, showing where intensity changes are strongest in the scene.&nbsp;</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/cameraman_dxdy_gradientMag1.jpeg" alt="" data-image-width="6000" data-image-height="2400">
+        <p class="u-text u-text-default u-text-6"> Edge image</p>
+        <p class="u-text u-text-default u-text-7"> The edge image is obtained by thresholding the gradient magnitude, turning pixels above a chosen value white and the rest black. This highlights the most significant intensity changes in the scene as crisp, binary edges. </p>
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/cameraman_binarized1.jpeg" alt="" data-image-width="4800" data-image-height="2400">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-4" id="sec-a554">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> Part 1.3: Derivative of Gaussian (DoG) Filter</h5>
+        <p class="u-text u-text-default u-text-2"> With Gaussian smoothing, the gradient magnitude image becomes much cleaner, and many of the small noisy responses in flat regions disappear. The binary edge map highlights only the stronger, more coherent edges, resulting in clearer outlines compared to the noisier result without smoothing. </p>
+        <img class="custom-expanded u-image u-image-contain u-image-default u-image-1" src="images/cameraman_gaussian1.jpeg" alt="" data-image-width="6000" data-image-height="4800">
+        <p class="u-text u-text-3"> The top row shows the filters: a 9×9 Gaussian kernel (left) used for smoothing, and the two derivative-of-Gaussian filters (middle and right) created by convolving the Gaussian with the horizontal and vertical difference operators. The bottom row shows their application to the image: the original input (left), the gradient magnitude computed with the DoG filters (middle), and the corresponding binarized edge map (right). These results closely match the earlier two-step approach of smoothing followed by differentiation, confirming that combining them into a single filter produces the same outcome. </p>
+        <img class="custom-expanded u-image u-image-contain u-image-default u-image-2" src="images/cameraman_gaussian_final1.jpeg" alt="" data-image-width="7200" data-image-height="4800">
+        <p class="u-text u-text-4"> The images show the original input alongside visualizations of gradient orientations. In the HSV representation, the hue encodes the direction of edges while the saturation and value highlight their strength, allowing edge orientations across the image to be perceived as different colors.</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-3" src="images/fish_HSV1.jpeg" alt="" data-image-width="7200" data-image-height="1800">
+        <img class="u-image u-image-default u-image-4" src="images/fish_HSV_full_enhanced1.jpeg" alt="" data-image-width="4671" data-image-height="2919">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-5" id="sec-ab90">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Part 2: Fun with Frequencies</h4>
+        <h4 class="u-text u-text-default u-text-2"> Part 2.1: Image "Sharpening"</h4>
+        <div class="fr-view u-align-left u-clearfix u-rich-text u-text u-text-3"></div>
+        <p class="u-align-left u-text u-text-4">The three panels illustrate the unsharp masking process for sharpening an image. On the left is the original blurry photo of the Taj Mahal. In the center is the unsharp mask kernel, which is essentially a Gaussian blur combined with a high-pass component—it subtracts the smoothed version of the image from the original so that only high-frequency details remain. On the right is the sharpened result, where these high frequencies have been added back to the original image, making edges and textures appear crisper and more defined. Implementation-wise, this is achieved by first convolving the image with a Gaussian filter, subtracting the blurred version from the original to isolate details, and then adding a scaled version of these details back to the image in a single convolution step.</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-1" src="images/taj_sharpened_color1.jpeg" alt="" data-image-width="7200" data-image-height="3000">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/dolphin_sharpened_color1.jpeg" alt="" data-image-width="7200" data-image-height="3000">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-6" id="sec-7355">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Part 2.2: Hybrid Images</h4>
+        <p class="u-align-left u-text u-text-2"> Here we created a <b>hybrid image</b> by combining two sources: one passed through a <b>low-pass filter</b> (Gaussian blur) to keep only its smooth, low-frequency content, and the other passed through a <b>high-pass filter</b> (original minus its blurred version) to retain only its fine details. These two filtered images are then added together to form a hybrid, which looks like one subject when viewed up close (because high frequencies dominate perception) and like another subject when viewed from afar (because only low frequencies remain visible). This technique follows the method described in the SIGGRAPH 2006 paper by Oliva, Torralba, and Schyns, and in the rest of the project I will experiment with different image pairs to produce hybrid illusions. The second row shows the <b>Fourier domain analysis</b> of each step. The log magnitude of the FFT of the two input images displays the frequency content of the originals. After filtering, the low-pass version shows energy concentrated near the center (indicating smooth content), while the high-pass version shows energy spread toward the edges (indicating fine details). The FFT of the hybrid demonstrates how both components coexist: central low frequencies come from the blurred image, while the outer high frequencies come from the sharpened details, confirming that the hybrid truly blends frequency bands from both sources.&nbsp;
+        </p>
+        <div class="fr-view u-align-left u-clearfix u-rich-text u-text u-text-3"></div>
+        <img class="custom-expanded u-image u-image-contain u-image-default u-image-1" src="images/hybrid_fish_cat_fft1.jpeg" alt="" data-image-width="6000" data-image-height="3600">
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/hybrid_fish_cat1.jpeg" alt="" data-image-width="6000" data-image-height="3000">
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/hybrid_Man_ornage_simple1.jpeg" alt="" data-image-width="6000" data-image-height="3000">
+        <p class="u-align-left u-text u-text-4">Bells and Whistles: In hybrid images, it generally works best to keep color information in the low-frequency component and use only grayscale for the high-frequency component. Human vision is more sensitive to color in smooth, low-frequency regions, while fine details and edges are primarily perceived through intensity differences. If the high-frequency image includes color, it can introduce distracting artifacts and reduce the clarity of the illusion. By contrast, adding color to the low-frequency image makes the hybrid appear more natural and stable, while the high-frequency details remain sharp and effective at close viewing distances.</p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-7" id="sec-f750">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Part 2.3: Gaussian and Laplacian Stacks</h4>
+        <div class="fr-view u-align-left u-clearfix u-rich-text u-text u-text-2"></div>
+        <p class="u-align-left u-text u-text-3">A Gaussian stack is a set of images where each level is a progressively blurred version of the original, created by repeatedly applying a Gaussian filter without reducing resolution. This captures lower and lower frequencies while keeping the image size fixed.&nbsp;</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-1" src="images/G_stack_mask_apple11.jpeg" alt="" data-image-width="7200" data-image-height="1800">
+        <p class="u-align-left u-text u-text-4">A Laplacian stack is derived from the Gaussian stack by subtracting each blurred level from the previous one, isolating the band-pass details (edges and textures) that vanish between levels. The final level is the coarsest Gaussian, holding the lowest-frequency structure.</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/L_stack_mask_apple1.jpeg" alt="" data-image-width="7200" data-image-height="1800">
+        <p class="u-align-left u-text u-text-5">When I first generated the Laplacian stack, the results did not look like the illustrations from the book. This is because the raw Laplacian values can be both positive and negative, often with small ranges, making the images appear very dark and not easily interpretable. To improve visualization, I applied a simple min–max normalization to each level:</p>
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/minmaxnormalization.png" alt="" data-image-width="406" data-image-height="134">
+        <p class="u-align-left u-text u-text-6">which rescales the values into the [0,1] range for display. This does not change the underlying data, but stretches the contrast so that the details at each scale become visible. With this adjustment, the Laplacian stack images look much closer to the ones shown in the book, and the normalized version is displayed below.</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-4" src="images/L_stack_apple_minmax_normalized21.jpeg" alt="" data-image-width="7200" data-image-height="1800">
+        <p class="u-align-left u-text u-text-7">The full reference image from the book is shown below, and it will be explained in detail in the next section.</p>
+        <img class="u-image u-image-contain u-image-default u-image-5" src="images/L_stack_oraple21.jpeg" alt="" data-image-width="2806" data-image-height="3774">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-8" id="sec-cbd5">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Part 2.4: Multiresolution Blending</h4>
+        <div class="fr-view u-align-left u-clearfix u-rich-text u-text u-text-2"></div>
+        <p class="u-align-left u-text u-text-3">In multi-resolution blending, two images are combined seamlessly by operating at different frequency bands rather than directly in pixel space. The process begins by constructing Laplacian stacks for the two input images, which decompose each image into band-pass layers capturing details at multiple scales, along with a Gaussian stack for a mask that determines which regions of each image contribute to the blend. At every level, the Laplacian details from each image are weighted by the corresponding blurred mask, ensuring that transitions occur smoothly across frequencies. Finally, the blended Laplacian stack is collapsed back into a full-resolution image, producing a result without harsh seams.
+The Laplacian stack visualization shows this step-by-step process: in each row, the apple (left) and the orange (middle) are weighted by the progressively blurred mask, and the right column shows the blended result for that level. Higher rows capture fine edges and details, while lower rows represent coarser color and structure. The bottom row shows the final recombined image, where the apple smoothly transitions into the orange, achieving the classic “Oraple” or Ears-Mars blend shown below.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/93B6FBC8-742C-4719-8235-72FB786EB9B2_1_201_a1.jpeg" alt="" data-image-width="2794" data-image-height="3756">
+        <p class="u-align-center u-text u-text-4">Mojave by night and day (MacOS wallpaper)</p>
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/L_stack_mojave11.jpeg" alt="" data-image-width="3600" data-image-height="3000">
+        <p class="u-align-center u-text u-text-5">Old vs. new Ferrari</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-3" src="images/L_stack_Ferrari1.jpeg" alt="" data-image-width="3600" data-image-height="2400">
+        <p class="u-align-center u-text u-text-6">The melting Earth</p>
+        <img class="u-image u-image-contain u-image-default u-image-4" src="images/L_stack_IceEarth_big1.jpeg" alt="" data-image-width="3840" data-image-height="2880">
+        <img class="u-image u-image-default u-preserve-proportions u-image-5" src="images/Earth500.jpeg" alt="" data-image-width="500" data-image-height="500">
+        <img class="u-image u-image-default u-image-6" src="images/ice.jpeg" alt="" data-image-width="1418" data-image-height="1066">
+        <img class="u-image u-image-default u-image-7" src="images/mask500.jpeg" alt="" data-image-width="500" data-image-height="376">
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-8" src="images/L_stack_IceEarth1.jpeg" alt="" data-image-width="3600" data-image-height="3600">
+        <p class="u-align-left u-text u-text-7">The most important thing I learned from this project is how powerful frequency-based representations are for understanding and manipulating images. By separating an image into low and high frequencies, I saw how different aspects of perception—smooth structures, colors, and fine details—can be isolated, enhanced, or combined in creative ways. Techniques like Gaussian and Laplacian stacks, unsharp masking, and hybrid images all build on this same idea, and working through them gave me an intuition for why the human visual system perceives images so differently depending on distance, scale, and frequency content. In addition I got much better in python programming and getting a feeling for gaussian filtern and theirs kernel size/variance in relation to the image size.</p>
+      </div>
+    </section>
+    
+    
+    
+    <footer class="u-align-center u-clearfix u-container-align-center u-footer u-grey-40 u-footer" id="footer"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">CS 180 - Project 2 - Melchior Kaeppel </p>
+      </div></footer>
+    </section>
+  
+</body></html>
