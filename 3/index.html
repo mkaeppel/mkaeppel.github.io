@@ -16,6 +16,12 @@
     
     
     
+    
+    
+    
+    
+    
+    
     <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800">
     <script type="application/ld+json">{
 		"@context": "http://schema.org",
@@ -353,6 +359,213 @@ Compared to more complex techniques such as Laplacian pyramids, simple alpha ble
         </div>
         <img class="u-image u-image-contain u-image-default u-image-3" src="images/panorama2.jpeg" alt="" data-image-width="7140" data-image-height="2885">
         <img class="u-image u-image-contain u-image-default u-image-4" src="images/two_image_mosaic.jpeg" alt="" data-image-width="2979" data-image-height="802">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-5" id="block-5">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">B1: Detecting corner features in an image</h4>
+        <p class="u-text u-text-default u-text-2">The first step of this project was to automatically detect interest points in the image — specific locations that are distinctive and easy to recognize again, even if the viewpoint or lighting changes. Such points usually occur at corners, intersections, or textured areas, and serve as reliable anchors for matching images later when creating mosaics.&nbsp;<br>
+          <br>Harris Corner Detection&nbsp;<br>
+          <br>The Harris Corner Detector is one of the most widely used methods for finding such points. The key idea is that a “corner” is a region where the brightness of the image changes significantly in two different directions. For example, the corner of a window frame or the tip of a roof.
+In contrast:&nbsp;<br>
+          <br>- A flat region (like the sky) looks similar in every direction, so it has little distinctive information.&nbsp;<br>- An edge has variation in only one direction, making it ambiguous because shifting along the edge doesn’t change much.&nbsp;<br>- A corner or intersection changes in all directions and is therefore unique and stable.&nbsp;<br>
+          <br>In practice, the algorithm looks at how much the image intensity varies when you slightly shift a small window in different directions. If the intensity changes a lot in every direction, that window is considered a strong corner.
+In this project, I used the provided harris.py implementation to compute the Harris response for each pixel. Bright areas in the response map indicate strong corner-like behavior. To keep the results clean, I ignored points near the image boundary and filtered out weak responses based on a relative threshold. This produced several thousand initial corner candidates across the image.&nbsp;<br>
+          <br>Adaptive Non-Maximal Suppression (ANMS)&nbsp;<br>
+          <br>While the Harris detector finds many potential corners, they are not evenly spread out. Most of them tend to cluster in highly textured regions - for example, on the grass or in the trees - while leaving smoother areas almost empty.
+To address this, I applied Adaptive Non-Maximal Suppression (ANMS).
+ANMS keeps only those corners that are both strong and well spaced apart. It does this by assigning each corner a kind of “personal space”: weak corners that lie too close to stronger ones are discarded, while strong and isolated corners are preserved. This ensures that the final set of points covers the entire image in a more balanced way, focusing on the most informative regions such as the corners of buildings, windows, or architectural details.&nbsp;<br>
+          <br>Results&nbsp;<br>
+          <br>The first figure below shows the Harris response map. Bright areas correspond to image regions with high local variation, while dark areas are uniform. As expected, most strong responses appear along edges and corners of the buildings, the tower, and the people sitting in the grass.
+The second figure compares the corners before and after ANMS:&nbsp;<br>- The left image shows all detected Harris corners (in red). They are dense and often overlap, especially in regions with repetitive textures.&nbsp;<br>- The right image shows the result after ANMS (in green). The corners are now more evenly distributed, with a focus on prominent, structurally meaningful features.
+        </p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/harris_response.jpeg" alt="" data-image-width="4543" data-image-height="2974">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/harris_corners.jpeg" alt="" data-image-width="8340" data-image-height="3296">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-6" id="block-6">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">B2:&nbsp;Feature Descriptor Extraction</h4>
+        <p class="u-text u-text-default u-text-2">After detecting reliable interest points with the Harris Corner Detector, the next step is to describe what each of those points looks like — in other words, to give each corner a compact numerical “fingerprint” that captures its local visual appearance. The goal of these feature descriptors is to make it possible to recognize the same physical point in different images, even if the lighting or viewpoint changes slightly. A good descriptor should be distinctive enough to tell different locations apart, but also robust enough to still match when the same structure appears under slightly different conditions.&nbsp;<br>
+          <br>In this part of the project, I implemented simple axis-aligned feature descriptors based on small image patches around each detected corner. For every interest point, I extracted a 40×40 pixel window centered on the point and then reduced it to an 8×8 descriptor. The larger window is important because it captures more context around the feature and introduces a natural amount of blurring when it is downsampled. This blurring smooths out fine textures, such as grass or tree leaves, which tend to vary a lot between images, while preserving the overall shape of larger, more stable structures like building edges or window corners.&nbsp;<br>
+          <br>Each 8×8 patch was then bias/gain normalized, meaning that its mean intensity was subtracted and the result divided by its standard deviation. This makes the descriptor largely invariant to changes in brightness or contrast. Without this normalization, two otherwise identical patches could look very different numerically if one image were slightly darker or brighter than the other. By normalizing them, the descriptor focuses on the relative pattern of light and dark areas rather than absolute intensity values. Finally, each normalized 8×8 patch was flattened into a 64-dimensional vector that can later be compared with other vectors using simple distance measures.
+This approach is intentionally kept axis-aligned, without rotation invariance, as required for this step. The idea is to keep the implementation simple while still producing stable descriptors that are robust to small shifts or brightness changes. The use of the large 40×40 window already provides a good level of tolerance to such variations.&nbsp;<br>
+          <br>The first figure below shows where these descriptors were extracted in the image. The green points mark the sample locations, which are spread across corners and high-contrast regions such as window frames, building edges, and the clock tower. These are the points that will later be used for image matching.&nbsp;<br>
+          <br>The second figure shows a selection of the extracted 8×8 normalized patches. Each one represents the local image structure around a corner in a highly compressed form. You can see that most patches contain smooth gradients or clear transitions between bright and dark areas. This is the result of the downsampling and normalization process, which removes unnecessary detail while preserving the essential shape information.&nbsp;<br>
+          <br>Overall, the descriptor extraction step transforms the visual information around each corner into a small, standardized representation that is easy to compare across images. The 40→8 downsampling ensures robustness to noise and small misalignments, while normalization ensures consistency under varying lighting. Together, these choices produce descriptors that focus on stable, large-scale image structures — the kind of features that can later be matched reliably between overlapping photographs when building the final image mosaic.
+        </p>
+        <img class="u-image u-image-default u-image-1" src="images/descriptors_img.jpeg" alt="" data-image-width="4140" data-image-height="3262">
+        <img class="u-image u-image-default u-image-2" src="images/descriptors.jpeg" alt="" data-image-width="4081" data-image-height="4263">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-7" id="block-7">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">B3: Feature Matching</h4>
+        <p class="u-text u-text-default u-text-2">Once distinctive features have been detected and described in both images, the next step is to figure out which features correspond to the same physical points across the two views. This process, called feature matching, is what connects the images together and it provides the raw correspondences needed later to estimate transformations and build mosaics.&nbsp;<br>
+          <br>The core idea is straightforward: if two descriptors (the 8×8 normalized patches from the previous step) look very similar, they likely represent the same corner or structure seen from slightly different viewpoints. To find these correspondences, every descriptor from the first image is compared to every descriptor from the second image. The comparison is done by measuring the Euclidean distance between descriptor vectors. A small distance means the patches are similar in appearance.&nbsp;<br>
+          <br>However, simply picking the nearest neighbor (the smallest distance) is not always reliable. Many parts of an image can look alike, such as the repeating patterns of windows or the texture of grass. In these cases, a descriptor may have multiple close matches, and choosing only the closest one could easily lead to false matches.&nbsp;<br>
+          <br>To make the matching more robust, I used the Lowe ratio test, a well-known technique introduced in the SIFT paper. Instead of looking only at the single best match, it considers the ratio between the distance to the best match and the distance to the second-best match. If the best match is truly distinctive, it should be much closer than the second-best one. If both are similarly close, the point is probably ambiguous and should be discarded. In this project, I used a ratio threshold of 0.5, which means that the best match had to be at least twice as good as the second-best one to be accepted. This is a conservative threshold that removes most incorrect matches while keeping enough good ones for geometric alignment.&nbsp;<br>
+          <br>In addition to the ratio test, I also applied a mutual nearest neighbor check. This ensures that the match works in both directions: if a feature in image A claims a best match in image B, the same feature in image B must also claim that point in image A as its best match. This simple step filters out many one-sided or inconsistent correspondences that often occur in textured or repetitive regions.&nbsp;<br>
+          <br>After applying these two filters, I visualized the remaining correspondences by drawing colored lines between the matching points across the two images. The example below shows the result for one image pair. Each line connects a point in the left image to its corresponding point in the right image. Most of the lines align well with the same structures — the building edges, windows, and the clock tower — indicating strong geometric consistency. Some mismatches still remain, particularly in low-texture areas like the sky or grass, but these will be filtered out in the next step using RANSAC.&nbsp;<br>
+          <br>Overall, this step establishes a set of tentative correspondences between images that are based purely on visual similarity. The use of the Lowe ratio test ensures that these correspondences are distinctive and less affected by repetitive textures, while the mutual nearest neighbor constraint enforces consistency. These matched pairs form the foundation for the following stage, where we will use RANSAC to estimate the transformation between the images and discard any remaining outliers.
+        </p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/matches.jpeg" alt="" data-image-width="2975" data-image-height="2066">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-8" id="block-8">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> B4: RANSAC for Robust Homography and Automatic Mosaic Stitching</h4>
+        <p class="u-text u-text-default u-text-2">The final part of the project brings everything together into a fully automated image stitching pipeline. The goal of this step is to estimate reliable geometric relationships between overlapping images and use them to create seamless panoramas. This requires a method that can cope with noisy or incorrect feature matches.&nbsp;<br>
+          <br>RANSAC, which stands for Random Sample Consensus, is a simple yet powerful algorithm for robust model fitting. When matching features between two images, not every match is correct. Even with filtering techniques such as the Lowe ratio test, some mismatches remain due to repetitive patterns, reflections, or small local differences. A direct least-squares computation of the homography would be strongly influenced by such outliers, often producing distorted results. RANSAC addresses this by repeatedly sampling small random subsets of matches and evaluating which subset best represents the majority of the data.&nbsp;<br>
+          <br>In this project, I implemented 4-point RANSAC to estimate the homography between two images. The algorithm works by repeatedly selecting four random correspondences (the minimum number needed to define a homography), computing a candidate transformation, and then testing how well that transformation maps all the other points. For each candidate, the algorithm projects the points from the first image into the second using the current homography and measures the alignment error. Points whose reprojection error is below a small threshold are counted as inliers. The model that produces the largest number of inliers is considered the best. Finally, a refined homography is recomputed using all inliers, producing an accurate and stable transformation. This process effectively ignores incorrect matches while keeping the ones that are geometrically consistent, allowing for precise image alignment even in the presence of significant noise.&nbsp;<br>
+          <br>Once the robust homographies were estimated, I used them to build automatic mosaics. For each set of three images, I detected corners automatically using the Harris detector, extracted normalized 8×8 patch descriptors, and matched features between consecutive pairs using the Lowe ratio test and mutual nearest-neighbor filtering. Then, I used RANSAC twice: Once to estimate the transformation between the left and middle image, and once between the middle and right image. The middle image serves as the anchor of the panorama, meaning that all other images are warped into its coordinate system. The left image is aligned to the middle using the homography from RANSAC, and the right image is aligned using the inverse of the homography between the middle and right images.&nbsp;<br>
+          <br>To stitch the images together, I reused and combined several helper functions from Part A, but implemented the stitching process explicitly in B4. First, the corners of all warped images are projected using their homographies to determine the global bounding box of the panorama. Then, each image is warped once into this shared coordinate space. A smooth alpha mask is created for each image so that overlapping areas can be feather-blended, producing smooth transitions without visible seams. This blending is performed using a weighted averaging scheme that accumulates pixel values from all warped images and normalizes by their combined weights. Finally, the accumulated result is normalized and converted back into a clean, blended mosaic.&nbsp;<br>
+          <br>The resulting panoramas demonstrate that the RANSAC-based approach successfully rejects incorrect correspondences and aligns the images with high geometric accuracy. The blending step further smooths out brightness variations and exposure differences, producing a visually seamless panorama. Compared to manual stitching, the results are similar in quality but require no human input - the entire process, from detecting corners to producing the final mosaic, runs automatically.&nbsp;<br>
+          <br>In summary, the RANSAC algorithm provides the robustness needed to handle outliers in feature matches and makes it possible to automatically estimate accurate homographies between images. By warping the left and right images into the middle image’s coordinate frame and blending them with smooth feathering, the final implementation in B4 achieves fully automatic, high-quality panoramas. The pipeline now integrates every component developed in previous steps - detection, description, matching, robust estimation, and blending - into a single, end-to-end system for automatic image mosaicing.
+        </p>
+        <h4 class="u-text u-text-default u-text-3">Mosaic 1: Doe Library</h4>
+        <p class="u-text u-text-default u-text-4">Images</p>
+        <div class="u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-none u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/011.jpeg" data-image-width="1000" data-image-height="1333">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-1"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/021.jpeg" data-image-width="1000" data-image-height="1333">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-2"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/031.jpeg" data-image-width="1000" data-image-height="1333">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-3"></div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-5">Hand Selected points</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/panorama3.jpeg" alt="" data-image-width="1920" data-image-height="1463">
+        <p class="u-text u-text-default u-text-6">Feature Matches</p>
+        <div class="custom-expanded u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-none u-gallery-2">
+          <div class="u-gallery-inner u-gallery-inner-2">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/matches12.jpeg" data-image-width="2979" data-image-height="2069">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-4"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/matches23.jpeg" data-image-width="2979" data-image-height="2069">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-5"></div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-7">RANSAC Algorithm</p>
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/panorama_auto_ransac.jpeg" alt="" data-image-width="2177" data-image-height="1770">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-9" id="block-9">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Mosaic 2: The shed in my garden</h4>
+        <p class="u-text u-text-default u-text-2">Images</p>
+        <div class="u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-none u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/01.jpeg" data-image-width="1000" data-image-height="1333">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-1"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/02.jpeg" data-image-width="1000" data-image-height="1333">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-2"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/03.jpeg" data-image-width="1000" data-image-height="1333">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-3"></div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-3">Hand Stitched</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/panorama1.jpeg" alt="" data-image-width="4374" data-image-height="3540">
+        <p class="u-text u-text-default u-text-4">Features</p>
+        <div class="u-expanded-width u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-none u-gallery-2">
+          <div class="u-gallery-inner u-gallery-inner-2">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/matches121.jpeg" data-image-width="2979" data-image-height="2069">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-4"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/matches231.jpeg" data-image-width="2979" data-image-height="2069">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-5"></div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-5">RANSAC stitched</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/panorama_auto_ransac1.jpeg" alt="" data-image-width="2103" data-image-height="1770">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-10" id="block-10">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">Mosaic 3: The GG</h4>
+        <p class="u-text u-text-default u-text-2">Images</p>
+        <div class="u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-none u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/01.jpg" data-image-width="1118" data-image-height="826">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-1"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/02.jpg" data-image-width="1118" data-image-height="826">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-2"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/03.jpg" data-image-width="1118" data-image-height="826">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-3"></div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-3">Hand stitched</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-1" src="images/panorama2.jpeg" alt="" data-image-width="7140" data-image-height="2885">
+        <p class="u-text u-text-default u-text-4">Features</p>
+        <div class="u-expanded-width u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-none u-gallery-2">
+          <div class="u-gallery-inner u-gallery-inner-2">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/matches122.jpeg" data-image-width="4170" data-image-height="1641">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-4"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/matches232.jpeg" data-image-width="4170" data-image-height="1641">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-5"></div>
+            </div>
+          </div>
+        </div>
+        <p class="u-text u-text-default u-text-5">RANSAC stitched</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/panorama_auto_ransac2.jpeg" alt="" data-image-width="3570" data-image-height="1424">
       </div>
     </section>
     
