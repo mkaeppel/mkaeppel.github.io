@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="de"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Project_4</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 7.15.4, nicepage.com">
+    
+    
+    
+    
+    
+    
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800">
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Project_4">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-home-page="Project_4.html" data-home-page-title="Project_4" data-path-to-root="./" data-include-products="false" class="u-body u-clearfix u-xl-mode" data-lang="de"><header class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-clearfix u-header u-section-row-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs" id="header" style="filter: none;"><div class="u-section-rows" style="">
+        <div class="u-clearfix u-section-row u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-section-row-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+          
+          
+          
+          
+          
+          <div class="u-clearfix u-sheet u-sheet-1">
+            <h4 class="u-align-center u-text u-text-grey-90 u-text-1">CS180 ​-&nbsp;Project 4&nbsp;<span style="font-size: 0.625rem;"></span>
+              <br>
+              <br>
+              <br>
+            </h4>
+          </div>
+        </div>
+        <div class="u-clearfix u-section-row">
+          <div class="u-clearfix u-sheet u-sheet-2"></div>
+          
+          
+          
+          
+          
+        </div>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="block-1">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">Part 0:&nbsp;Calibrating Your Camera and Capturing a 3D Scan</h4>
+        <p class="u-text u-text-default u-text-2">In this part, the camera calibration and pose estimation pipeline was implemented to prepare a custom dataset for NeRF training.&nbsp;<br>
+          <br>First, multiple images of an ArUco calibration tag were captured from different viewpoints. Using OpenCV’s ArUco detector, the 2D corner coordinates of the tag were extracted and used with cv2.calibrateCamera() to estimate the camera’s intrinsic parameters (focal length and principal point) and distortion coefficients.
+For each object-scan image, the tag was detected again, and the Perspective-n-Point (PnP) algorithm was applied to estimate the camera’s extrinsic parameters (rotation and translation), which were converted into camera-to-world transformation matrices.
+All images were then undistorted based on the calibration results and organized together with their corresponding poses and focal length into a structured .npz dataset.
+The visualization displays the reconstructed camera frusta and orientations around of 2 captures objects (first row:&nbsp;stuffed animal, second row: banana and&nbsp;pine cones).
+        </p>
+        <div class="u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-none u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/render-5.png" data-image-width="2940" data-image-height="1540">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-1"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/render-4.png" data-image-width="2940" data-image-height="1540">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-2"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/render-3.png" data-image-width="2940" data-image-height="1540">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-3"></div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/render-2.png" data-image-width="2940" data-image-height="1540">
+              </div>
+              <div class="u-over-slide u-shading u-over-slide-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="block-2">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h4 class="u-text u-text-1"> Part 1: Fit a Neural Field to a 2D Image</h4>
+        <p class="u-align-justify u-text u-text-default u-text-2">In this part, the goal was to represent a 2-D image not as a collection of pixels, but as a continuous function that maps spatial coordinates to color values.
+To achieve this, a small neural network (a multi-layer perceptron) was trained to learn this mapping: </p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/2dmlp.png" alt="" data-image-width="2332" data-image-height="696">
+        <p class="u-align-justify u-text u-text-3">When given a coordinate (x, y) within the image, the network predicts the corresponding RGB color.
+During training, a large number of pixel positions were randomly sampled from the image, and the network learned to reproduce their colors by minimizing the difference between its predictions and the true pixel values.
+To help the network capture fine details, each coordinate was first transformed through a positional encodin​g, which allows the model to represent high-frequency variations such as sharp edges and textures.
+By the end of training, the network effectively memorized the image as a continuous implicit function, enabling smooth reconstructions and demonstrating how neural fields can store and reconstruct visual data without relying on a traditional pixel grid.</p>
+        <p class="u-text u-text-4">Experimental Configurations</p>
+        <div class="u-table u-table-responsive u-table-1">
+          <table class="u-table-entity">
+            <colgroup>
+              <col width="25%">
+              <col width="25%">
+              <col width="25%">
+              <col width="25%">
+            </colgroup>
+            <tbody class="u-table-body">
+              <tr style="height: 45px;">
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-1">Configurations</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-2">Channel Size</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-3"> Frequency (L)&nbsp;</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell u-table-cell-4"> Learning Rate</td>
+              </tr>
+              <tr style="height: 45px;">
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Bas​e</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">256 </td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">10</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell"> 0.01 </td>
+              </tr>
+              <tr style="height: 45px;">
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Reduced Frequency </td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">256</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">5</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">0.01</td>
+              </tr>
+              <tr style="height: 45px;">
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Wider</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">512</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">10</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">0.01</td>
+              </tr>
+              <tr style="height: 45px;">
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Narrower</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">128</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">10</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">0.01</td>
+              </tr>
+              <tr style="height: 45px;">
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Higher LR</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">256</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">10</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">0.5</td>
+              </tr>
+              <tr style="height: 45px;">
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">Lower LR</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">256</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">10</td>
+                <td class="u-border-1 u-border-grey-dark-1 u-table-cell">0.005</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="u-align-justify u-text u-text-default u-text-5">Training Behavior&nbsp;<br>
+          <br>The figure below shows the PSNR loss over training iterations for all configurations.
+All models start with low PSNR (poor reconstructions) and gradually improve as training progresses.&nbsp;<br>On the fox image: Base, Narrower, and Lower LR networks reach similar final performance, indicating that moderate changes in width have little effect on fitting a single image.&nbsp;<br>The Reduced Frequency model converges to a worse PSNR, confirming that fewer positional encoding frequencies limit the ability to reproduce fine details and textures.&nbsp;<br>Higher LR and Wider configurations both fail to improve beyond their initial values: too high a learning rate causes unstable optimization.
+Overall, the Base configuration provides the best balance between speed and stability, while the comparison highlights the sensitivity of implicit neural representations to both the frequency encoding and the learning rate choices.
+        </p>
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/training_loss_comparison_fox.jpeg" alt="" data-image-width="3600" data-image-height="2100">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-3" src="images/Base_reconstructions.jpeg" alt="" data-image-width="7800" data-image-height="1080">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-4" src="images/ReducedFrequency_reconstructions.jpeg" alt="" data-image-width="7800" data-image-height="1080">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-5" src="images/Wider_reconstructions.jpeg" alt="" data-image-width="7800" data-image-height="1080">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-6" src="images/Narrower_reconstructions.jpeg" alt="" data-image-width="7800" data-image-height="1080">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-7" src="images/HigherLR_reconstructions.jpeg" alt="" data-image-width="7800" data-image-height="1080">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-8" src="images/LowerLR_reconstructions.jpeg" alt="" data-image-width="7800" data-image-height="1080">
+        <img class="u-image u-image-contain u-image-default u-image-9" src="images/training_loss_comparison_GG1.jpeg" alt="" data-image-width="3600" data-image-height="2100">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-10" src="images/Base_reconstructions1.jpeg" alt="" data-image-width="7800" data-image-height="1320">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-11" src="images/ReducedFrequency_reconstructions1.jpeg" alt="" data-image-width="7800" data-image-height="1320">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-12" src="images/Wider_reconstructions1.jpeg" alt="" data-image-width="7800" data-image-height="1320">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-13" src="images/Narrower_reconstructions1.jpeg" alt="" data-image-width="7800" data-image-height="1320">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-14" src="images/HigherLR_reconstructions1.jpeg" alt="" data-image-width="7800" data-image-height="1320">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-15" src="images/LowerLR_reconstructions1.jpeg" alt="" data-image-width="7800" data-image-height="1320">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-3" id="block-3">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">Part 2:&nbsp;Fit a Neural Radiance Field from Multi-view Images</h4>
+        <p class="u-align-justify u-text u-text-default u-text-2">The goal of Part 2 is to extend the simple 2-D neural field from Part 1 into a full 3-D Neural Radiance Field (NeRF) that can learn the geometry, color, and appearance of a scene from multiple calibrated images taken at different camera poses.
+In this part, you build the complete NeRF pipeline step-by-step: first converting pixels to camera rays using the known intrinsics and extrinsics, then sampling 3-D points along those rays, predicting each point’s density and color with a neural network, and finally volume-rendering these predictions to synthesize the final pixel colors.  By training the network to match the posed input images, it implicitly learns a continuous 3-D representation of the scene that can be used to render novel viewpoints and visualize depth.  In short, Part 2 teaches how NeRF performs inverse rendering—reconstructing a 3-D scene from 2-D observations through differentiable ray sampling and volume integration.</p>
+        <h5 class="u-text u-text-default u-text-3"> Part 2.1: Create Rays from Cameras</h5>
+        <p class="u-align-justify u-text u-text-default u-text-4">In Part 2.1, the main task was to generate camera rays that connect each pixel in the image plane with its corresponding line of sight in 3-D space. Using the known camera intrinsics and extrinsics, pixel coordinates were first converted into camera-space directions, and then transformed into world coordinates through the camera-to-world matrix. This produced, for every pixel, a ray origin (the camera center) and a ray direction (the normalized viewing direction). These rays form the geometric foundation for all subsequent steps of the NeRF pipeline, as they define the spatial paths along which 3-D points will later be sampled and evaluated by the neural network to reconstruct the scene.<br>
+        </p>
+        <p class="u-align-justify u-text u-text-default u-text-5"> The following functions were implemented:<br>
+          <br>- transform() maps these 3-D camera points into world coordinates using the camera-to-world transformation matrix.&nbsp;<br>- pixel_to_camera() converts 2-D pixel coordinates into 3-D points in the camera coordinate system using the camera’s intrinsic matrix.&nbsp;<br>- pixel_to_ray() combines both steps to compute, for each pixel, the ray origin (camera position) and ray direction (viewing direction in world space).
+        </p>
+        <h5 class="u-text u-text-6">Part 2.2: Sampling</h5>
+        <p class="u-align-justify u-text u-text-default u-text-7">In thist task, the focus was on taking the camera rays generated in the previous step and sampling a sequence of 3-D points along each ray. This was done between predefined near and far bounds, effectively discretizing the continuous ray into a set of evenly spaced positions in space. These sampled points represent the locations where the neural network will later predict color and density values. By sampling multiple points per ray, the model gains the ability to approximate the volumetric structure of the scene rather than relying on a single surface point. This step bridges the gap between 2-D image rays and the continuous 3-D volume that NeRF learns to represent.</p>
+        <h5 class="u-text u-text-8"> Part 2.3: Putting the Dataloading All Together</h5>
+        <p class="u-align-justify u-text u-text-default u-text-9"><span style="font-weight: 700;"><span style="font-weight: 400;"> In Part 2.3, the task was to extend the dataloader from Part 1 to work with <b><span style="font-weight: 400;">multi-view images</span></b> and the newly implemented <b><span style="font-weight: 400;">ray</span><span style="font-weight: 400;">generation</span></b> pipeline. Instead of returning only pixel coordinates and colors, the dataloader now converts sampled pixel locations into full <b><span style="font-weight: 400;">camera</span><span style="font-weight: 400;">rays</span></b>, outputting for each sampled pixel its corresponding <b><span style="font-weight: 400;">ray</span><span style="font-weight: 400;">origin</span></b>, <b><span style="font-weight: 400;">ray</span><span style="font-weight: 400;">direction</span></b>, and <b><span style="font-weight: 400;">RGB</span><span style="font-weight: 400;">color</span></b>. This ensures that each training sample represents a 3-D observation of the scene rather than a simple 2-D pixel. To verify correctness, the provided visualization code can be used to plot the cameras, rays, and sampled points in 3-D confirming that all rays align correctly within the camera frustum. This integration step establishes a complete data flow from image pixels to 3-D rays, preparing the system for learning the radiance field in later parts.&nbsp;</span><span style="font-weight: 400;"><span style="font-weight: 700;"></span></span></span>
+          <br>
+          <br>The following figure shows randomly sampled rays and confirms that everything works correctly.
+        </p>
+        <img class="u-expanded-width u-image u-image-1" src="images/render.png" data-image-width="2940" data-image-height="1520">
+        <h5 class="u-text u-text-10"> Part 2.4: Neural Radiance Field</h5>
+        <p class="u-text u-text-default u-text-11"> The Neural Radiance Field is implemented as a deep neural network that maps spatial coordinates and viewing directions to color and density values. This network is enhanced to handle higher-dimensional inputs (3D position and view direction vectors) and outputs (RGB colors plus density), compared to the simple MLP from Part 1. The network architecture is shown in the figure below:</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/mlp_nerf.png" alt="" data-image-width="4180" data-image-height="1356">
+        <h5 class="u-text u-text-12"> Part 2.5: Volume Rendering</h5>
+        <p class="u-align-justify u-text u-text-default u-text-13">Volume rendering combines the color and density predictions along each ray into a final rendered image. The key idea is to simulate how light travels through a semi-transparent volume: each sampled point along a ray contributes to the final pixel color based on its density (how opaque it is) and transmittance (how much light passes through). By integrating these contributions, the model can reconstruct realistic color and depth for every pixel. This step effectively transforms the neural network’s per-point outputs into continuous 2-D images, enabling the system to learn a volumetric representation of the 3-D scene that can later be used to render new viewpoints.<br>
+          <br>The model was trained using 10000 rays, 2000 iterations and a learning rate of 1e-3. The sample images show the reconstructed images after N iterations and the PSNR.
+        </p>
+        <div class="u-expanded-width u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-always u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/novel_view_iter_100.jpg" data-image-width="200" data-image-height="200" alt="N = 100">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-over-slide-1">
+                <p class="u-align-center u-gallery-heading u-large-text u-text-variant" style="margin-right: 0px; margin-left: 0px;">N = 100</p>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/novel_view_iter_500.jpg" data-image-width="200" data-image-height="200" alt="N = 500">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-over-slide-2">
+                <p class="u-align-center u-gallery-heading u-large-text u-text-variant" style="margin-right: 0px; margin-left: 0px;">N = 500</p>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/novel_view_iter_1000.jpg" data-image-width="200" data-image-height="200" alt="N = 1000">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-over-slide-3">
+                <p class="u-align-center u-gallery-heading u-large-text u-text-variant" style="margin-right: 0px; margin-left: 0px;">N = 1000</p>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/novel_view_iter_1500.jpg" data-image-width="200" data-image-height="200" alt="N = 1500">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-over-slide-4">
+                <p class="u-align-center u-gallery-heading u-large-text u-text-variant" style="margin-right: 0px; margin-left: 0px;">N = 1500</p>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/novel_view_iter_2000.jpg" data-image-width="200" data-image-height="200" alt="N = 2000">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-over-slide-5">
+                <p class="u-align-center u-gallery-heading u-large-text u-text-variant" style="margin-right: 0px; margin-left: 0px;">N = 2000</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/Bildschirmfoto2025-11-01um16.55.14.png" alt="" data-image-width="1408" data-image-height="1122">
+        <img class="u-image u-image-default u-preserve-proportions u-image-4" src="images/nerf.gif" alt="" data-image-width="200" data-image-height="200">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-4" id="block-4">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1">Part 2.6:&nbsp;Training with your own data</h4>
+        <p class="u-text u-text-default u-text-2">An attempt was made to train the NeRF model on the self-captured dataset from Part 0. Although the visualization of the estimated camera poses looked correct, the training consistently failed to converge the PSNR remained around 5 dB throughout, even after experimenting with different learning rates and hyperparameter settings. Several factors could explain this: the dataset likely contained too few images to cover the scene adequately, the captures were not distributed evenly on a hemispherical path around the object, and there may have been inconsistencies in camera intrinsics or scaling compared to the assumptions made by the training code. Small errors in calibration or pose estimation, even if not visible in the visualization, can accumulate and prevent the network from learning a coherent radiance field.&nbsp;<br>
+          <br>Ultimately, this task had too many open parameters that I couldn't definitively solve or get right with my experience and intuition. This was unfortunately true for both the Lafufu dataset and my own images.<br>
+        </p>
+      </div>
+    </section>
+    
+    
+    
+    <footer class="u-align-center u-clearfix u-container-align-center u-footer u-grey-40 u-footer" id="footer"><div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">CS 180 - Project 4 - Melchior Kaeppel </p>
+      </div></footer>
+    </section>
+  
+</body></html>
