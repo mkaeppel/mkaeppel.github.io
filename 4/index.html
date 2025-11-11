@@ -250,9 +250,9 @@ In this part, you build the complete NeRF pipeline step-by-step: first convertin
       </div>
     </section>
     <section class="u-clearfix u-section-4" id="block-4">
-      <div class="u-clearfix u-sheet u-sheet-1">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
         <h4 class="u-text u-text-default u-text-1">Part 2.6:&nbsp;Training with your own data</h4>
-        <p class="u-text u-text-default u-text-2">An attempt was made to train the NeRF model on the self-captured dataset from Part 0. Although the visualization of the estimated camera poses looked correct, the training consistently failed to converge the PSNR remained around 5 dB throughout, even after experimenting with different learning rates and hyperparameter settings. Several factors could explain this: the dataset likely contained too few images to cover the scene adequately, the captures were not distributed evenly on a hemispherical path around the object, and there may have been inconsistencies in camera intrinsics or scaling compared to the assumptions made by the training code. Small errors in calibration or pose estimation, even if not visible in the visualization, can accumulate and prevent the network from learning a coherent radiance field.&nbsp;<br>
+        <p class="u-text u-text-default u-text-2">An attempt was made to train the NeRF model on the self-captured dataset from Part 0. Although the visualization of the estimated camera poses looked correct, the training consistently failed to converge the PSNR remained around 12 dB throughout, even after experimenting with different learning rates and hyperparameter settings.&nbsp;<br>
           <br>Ultimately, this task had too many open parameters that I couldn't definitively solve or get right with my experience and intuition. This was unfortunately true for both the Lafufu dataset and my own images.<br>
         </p>
       </div>
@@ -263,6 +263,7 @@ In this part, you build the complete NeRF pipeline step-by-step: first convertin
     <footer class="u-align-center u-clearfix u-container-align-center u-footer u-grey-40 u-footer" id="footer"><div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
         <p class="u-small-text u-text u-text-variant u-text-1">CS 180 - Project 4 - Melchior Kaeppel </p>
       </div></footer>
+    <section class="u-backlink u-clearfix u-grey-80"> This <a href="https://nicepage.com/website-design">Website Design</a> was created with Nicepage Website Builder 
     </section>
   
 </body></html>

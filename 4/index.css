@@ -679,7 +679,7 @@
     margin-left: 0;
   }
 }.u-section-4 .u-sheet-1 {
-  min-height: 391px;
+  min-height: 262px;
 }
 
 .u-section-4 .u-text-1 {
@@ -688,7 +688,5 @@
 }
 
 .u-section-4 .u-text-2 {
-  margin-left: 0;
-  margin-right: 0;
-  margin-bottom: 34px;
+  margin: 20px 0;
 }
