@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="de"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Project_5</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="index.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 8.0.6, nicepage.com">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800">
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": ""
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Project_5">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body data-home-page="Project_5.html" data-home-page-title="Project_5" data-path-to-root="./" data-include-products="false" class="u-body u-clearfix u-xl-mode" data-lang="de"><header class="u-border-no-bottom u-border-no-left u-border-no-right u-border-no-top u-clearfix u-header u-section-row-container u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs" id="header" style="filter: none;"><div class="u-section-rows" style="">
+        <div class="u-clearfix u-section-row u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-section-row-1" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+          
+          
+          
+          
+          
+          <div class="u-clearfix u-sheet u-valign-bottom-lg u-valign-bottom-md u-valign-bottom-sm u-valign-bottom-xs u-sheet-1">
+            <h4 class="u-align-center u-text u-text-grey-90 u-text-1">CS180 ​-&nbsp;Project 5&nbsp;<span style="font-size: 0.625rem;"></span>
+              <br>
+              <br>
+              <br>
+            </h4>
+          </div>
+        </div>
+        <div class="u-clearfix u-section-row">
+          <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-2">
+            <h3 class="u-text u-text-default u-text-2"> Fun With Diffusion Models</h3>
+          </div>
+          
+          
+          
+          
+          
+        </div>
+        <div class="u-clearfix u-section-row">
+          <div class="u-clearfix u-sheet u-sheet-3"></div>
+          
+          
+          
+          
+          
+        </div>
+        <div class="u-clearfix u-section-row">
+          <div class="u-clearfix u-sheet u-sheet-4"></div>
+          
+          
+          
+          
+          
+        </div>
+      </div></header>
+    <section class="u-clearfix u-section-1" id="block-13">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Part A: The Power of Diffusion Models</h4>
+        <p class="u-align-justify u-text u-text-default u-text-2">This project introduces the basic ideas behind diffusion models and demonstrates how they can be used for image generation and editing. It is shown how images can be gradually noised and then restored using a pre-trained diffusion model.
+Part A of the project includes generating images from text prompts, denoising noisy inputs, and progressively improving image quality through iterative sampling. It also covers more creative applications such as transforming existing images, projecting hand-drawn sketches onto the natural image manifold, inpainting, and creating visual illusions and hybrid images.&nbsp;</p>
+        <h5 class="u-text u-text-default u-text-3">Part 0: Sampling from the Model </h5>
+        <p class="u-text u-text-default u-text-4">Below are shown 3 prompts for 5 inference steps in the upper row and 50 steps in the lower row. While the images for 5 steps are still noisy, the amount of detail and realism improves with a higher number of steps and the image becomes less noisy.&nbsp;<br>
+          <br>The seed was set to 180.
+        </p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um19.15.30.png" alt="" data-image-width="1560" data-image-height="558">
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um19.18.55.png" alt="" data-image-width="1554" data-image-height="552">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-2" id="block-1">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1">1.1 Implementing the forward process</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">A forward diffusion pass is needed because diffusion models learn by first destroying an image in a controlled way and then reversing that destruction. To understand and later use the reverse process, it’s important to define how the image is noised. The idea is to start with a clean picture and gradually blend it with random noise so it becomes less and less recognizable over time. Early steps keep much of the original structure, while later steps push the image toward pure static. Implementing this controlled noising process makes it possible to visualize how the model’s “starting point” is created. The images shown below display this progression for the Campanile photo at increasing noise levels from left to right t = 250, 500, 750.</p>
+        <div class="u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-always u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_1_campanile_noisy_t_250.png" data-image-width="64" data-image-height="64" alt="t=250">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom-xl u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-over-slide-1">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: auto; margin-left: auto;">t=250</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_1_campanile_noisy_t_500.png" data-image-width="64" data-image-height="64" alt="t=500">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom-xl u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-over-slide-2">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: auto; margin-left: auto;">t=500</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_1_campanile_noisy_t_750.png" data-image-width="64" data-image-height="64" alt="t=750">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom-xl u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-over-slide-3">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=750</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-3" id="block-2">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.2 Classical Denoising</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">Before trying to denoise images with a diffusion model, it’s helpful to see how a basic classical method performs. Gaussian blur is a simple way to smooth out noise by softening the image, and it gives us a baseline to compare against. It cannot fully fix heavily noised images, but it shows classical methods work for moderately noised images. The blurred versions of the noisy Campanile images are shown below.</p>
+        <div class="u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-always u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_2_campanile_clDenoised_t_250.png" data-image-width="64" data-image-height="64" alt="t=250">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-1">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=250</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_2_campanile_clDenoised_t_500.png" data-image-width="64" data-image-height="64" alt="t=500">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-2">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=500</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_2_campanile_clDenoised_t_750.png" data-image-width="64" data-image-height="64" alt="t=750">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-3">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: auto; margin-left: auto;">t=750</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-4" id="block-3">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.3 Implementing One Step Denoising</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">The next step is to try denoising with a learned diffusion model. Therefore, a pretrained UNet is used that has seen a huge number of noisy–clean image pairs and has learned how typical natural images should look. Given a noisy input and the noise level (timestep), the model estimates which parts of the image are just noise and which parts are actual content. By subtracting the predicted noise, it produces a cleaner version that is much closer to the original scene. A simple text condition like “a high quality photo” helps guide the model toward realistic results. Below, the original Campanile image, its noisy versions, and the one-step denoised outputs are shown side by side for different noise levels.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-11-25um23.53.39.png" alt="" data-image-width="1574" data-image-height="1726">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-5" id="block-4">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1">1.4 Implementing Iterative Denoising</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">One-step denoising works well for lightly corrupted images, but it struggles when the noise level is high. Diffusion models, however, are designed to clean an image gradually through many small steps. Instead of jumping directly from a very noisy image to a clean one, the model repeatedly estimates what the image should look like and slowly moves it toward a clearer version. To make this process faster, only a subset of timesteps is used, starting from a very noisy point and stepping down toward zero noise in regular intervals. At each step, the model predicts both the underlying image content and the amount of randomness that should remain, and these predictions are combined to produce a slightly cleaner result. Repeating this many times produces a smooth transition from pure noise back to a detailed image. Below are the intermediate stages of this iterative denoising process applied to the Campanile, along with a comparison to the single-step method and to simple Gaussian blurring. Interestingly the model does not fully recover the campanile, but a tower that looks similar, however more round than in a rectangular shape.</p>
+        <div class="u-gallery u-layout-grid u-lightbox u-no-transition u-show-text-always u-gallery-1">
+          <div class="u-gallery-inner u-gallery-inner-1">
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_4_denoise_t_690.png" data-image-width="64" data-image-height="64" alt="t=690">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-1">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=690</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_4_denoise_t_540.png" data-image-width="64" data-image-height="64" alt="t=540">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-2">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=540</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_4_denoise_t_390.png" data-image-width="64" data-image-height="64" alt="t=390">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-3">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=390</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_4_denoise_t_240.png" data-image-width="64" data-image-height="64" alt="t=240">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-4">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=240</h4>
+              </div>
+            </div>
+            <div class="u-effect-hover-zoom u-gallery-item u-shape-rectangle" data-animation-name="" data-animation-duration="0" data-animation-delay="0" data-animation-direction="">
+              <div class="u-back-slide">
+                <img class="u-back-image u-expanded" src="images/1_4_denoise_t_90.png" data-image-width="64" data-image-height="64" alt="t=90">
+              </div>
+              <div class="u-container-align-center u-over-slide u-shading u-valign-bottom u-over-slide-5">
+                <h4 class="u-align-center u-gallery-heading" style="margin-right: 0px; margin-left: 0px;">t=90</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-11-26um00.24.18.png" alt="" data-image-width="1734" data-image-height="378">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-6" id="block-5">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1">1.5 ​Diffusion Model Sampling</h5>
+        <p class="u-align-justify u-text u-text-2">In the previous part (1.4) we used the diffusion model to denoise an image. Another application for the iterative_denoise function is to generate images from scratch. ​Five&nbsp;results of the prompt "a high quality photo" are shown below.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um19.48.52.png" alt="" data-image-width="2132" data-image-height="464">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-7" id="block-6">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.6 Classifier Free Guidance</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">To improve image quality, classifier-free guidance (CFG) is used. The idea behind CFG is to guide the diffusion model more strongly toward the text prompt while still keeping the flexibility of the generation process. This is done by combining two predictions: one where the model follows the prompt, and one where it ignores the prompt entirely. By emphasizing the difference between these two predictions, the model is encouraged to produce images that better match the intended description. While this reduces diversity slightly, it leads to much clearer and more realistic images. The results shown below demonstrate how CFG significantly improves image quality compared to unguided sampling.<br>
+        </p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um16.12.06.png" alt="" data-image-width="2132" data-image-height="462">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-8" id="block-7">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.7 Image-to-image Translation</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">This section shows how diffusion models can be used to edit existing images instead of generating new ones from scratch. The process starts by adding a small amount of noise to a real image and then denoising it again using the diffusion model. During denoising, the model fills in missing details and slightly reshapes the image, which allows controlled edits to appear. Adding more noise leads to stronger changes, while less noise keeps the result closer to the original image. This approach follows the idea of SDEdit, where images are gently pushed onto the natural image manifold. The results below show multiple edited versions of the Campanile and other test images, with increasing similarity to the original as the noise level is reduced.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um16.07.54.png" alt="" data-image-width="2564" data-image-height="462">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-9" id="block-8">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.7.1 Editing Hand-Drawn and Web Images</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">Next we apply the same image-to-image editing approach to less realistic inputs, such as sketches, drawings, and images found online. Starting from rough or abstract visuals works especially well, because the diffusion model naturally fills in missing details and pushes the image toward a more realistic appearance. By adding different amounts of noise and then denoising, the model produces a range of results from loose interpretations to images that closely resemble natural photographs. Below, examples are shown for both web images and hand-drawn inputs, illustrating how simple sketches and downloaded images can be transformed into more refined and realistic versions using the same diffusion-based process.</p>
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-1" src="images/Bildschirmfoto2025-12-13um16.30.16.png" alt="" data-image-width="164" data-image-height="166">
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um16.16.44.png" alt="" data-image-width="962" data-image-height="194">
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/Bildschirmfoto2025-12-13um16.28.52.png" alt="" data-image-width="962" data-image-height="194">
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-4" src="images/Bildschirmfoto2025-12-13um16.29.42.png" alt="" data-image-width="164" data-image-height="166">
+        <img class="u-image u-image-contain u-image-default u-image-5" src="images/Bildschirmfoto2025-12-13um16.23.58.png" alt="" data-image-width="962" data-image-height="194">
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-6" src="images/Bildschirmfoto2025-12-13um16.29.55.png" alt="" data-image-width="164" data-image-height="166">
+        <img class="u-image u-image-contain u-image-default u-image-7" src="images/Bildschirmfoto2025-12-13um16.49.47.png" alt="" data-image-width="962" data-image-height="196">
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-8" src="images/Bildschirmfoto2025-12-13um16.49.59.png" alt="" data-image-width="164" data-image-height="166">
+        <img class="u-image u-image-contain u-image-default u-image-9" src="images/Bildschirmfoto2025-12-13um20.10.08.png" alt="" data-image-width="992" data-image-height="216">
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-10" src="images/Bildschirmfoto2025-12-13um20.09.51.png" alt="" data-image-width="154" data-image-height="162">
+        <img class="u-image u-image-contain u-image-default u-image-11" src="images/Bildschirmfoto2025-12-13um20.08.56.png" alt="" data-image-width="992" data-image-height="214">
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-12" src="images/Bildschirmfoto2025-12-13um20.06.23.png" alt="" data-image-width="168" data-image-height="166">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-10" id="block-9">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.7.2 Inpainting</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">Inpainting is a way to “fill in” missing parts of an image in a realistic-looking way. A mask is used to mark the region that should be replaced, while the rest of the image should stay the same. The diffusion denoising loop is then run as usual, but after every step the pixels outside the mask are reset to match the original image (with the correct amount of noise for that step). This keeps the unchanged area stable, while the model is free to generate new content only inside the masked region. The results below show the Campanile with the top region inpainted, along with additional examples using custom masks on other images.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um16.36.23.png" alt="" data-image-width="944" data-image-height="348">
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um16.40.49.png" alt="" data-image-width="944" data-image-height="348">
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/Bildschirmfoto2025-12-13um16.35.59.png" alt="" data-image-width="634" data-image-height="348">
+        <img class="u-image u-image-contain u-image-default u-image-4" src="images/Bildschirmfoto2025-12-13um16.41.04.png" alt="" data-image-width="648" data-image-height="348">
+        <img class="u-image u-image-contain u-image-default u-image-5" src="images/Bildschirmfoto2025-12-13um16.51.28.png" alt="" data-image-width="942" data-image-height="346">
+        <img class="u-image u-image-contain u-image-default u-image-6" src="images/Bildschirmfoto2025-12-13um17.05.43.png" alt="" data-image-width="944" data-image-height="346">
+        <img class="u-image u-image-contain u-image-default u-image-7" src="images/Bildschirmfoto2025-12-13um16.51.47.png" alt="" data-image-width="628" data-image-height="346">
+        <img class="u-image u-image-contain u-image-default u-image-8" src="images/Bildschirmfoto2025-12-13um17.05.54.png" alt="" data-image-width="634" data-image-height="346">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-11" id="block-10">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.7.3 Text-Conditioned Image-to-image Translation</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">Next we add text control to the image-to-image editing process. Instead of only pushing a noisy image back toward a realistic-looking version, the diffusion model is also guided by a text prompt that describes the desired result. This makes it possible to keep the main structure of the original image while steering the style or content in a specific direction. Different noise levels again control how strong the change is: low noise keeps the result close to the original, while higher noise gives the model more freedom to follow the prompt. The images shown below demonstrate these text-guided edits for the Campanile and additional test images.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um17.11.08.png" alt="" data-image-width="1884" data-image-height="350">
+        <h6 class="u-align-justify u-text u-text-default u-text-3">A pencil</h6>
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um17.16.20.png" alt="" data-image-width="1884" data-image-height="350">
+        <h6 class="u-align-justify u-text u-text-default u-text-4">A christmas tree</h6>
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/Bildschirmfoto2025-12-13um17.58.25.png" alt="" data-image-width="1854" data-image-height="350">
+        <h6 class="u-align-justify u-text u-text-default u-text-5">A banana</h6>
+        <h6 class="u-align-justify u-text u-text-default u-text-6">A christmas tree</h6>
+        <img class="u-image u-image-contain u-image-default u-image-4" src="images/Bildschirmfoto2025-12-13um18.02.10.png" alt="" data-image-width="1854" data-image-height="350">
+        <img class="u-image u-image-contain u-image-default u-image-5" src="images/Bildschirmfoto2025-12-13um18.08.37.png" alt="" data-image-width="1884" data-image-height="350">
+        <h6 class="u-align-justify u-text u-text-default u-text-7">A christmas tree</h6>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-12" id="block-11">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.8 Visual Anagrams</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">Visual anagrams use diffusion models to create optical illusions that change depending on how the image is viewed. The idea is to guide the denoising process with two different text prompts at the same time—one for the image as it appears normally, and one for the image when it is flipped upside down. By combining these two guidance signals, the model produces a single image that can be interpreted in two different ways. When viewed upright, the image matches one description, and when flipped, it reveals a completely different scene. The examples shown below demonstrate how diffusion models can blend multiple interpretations into a visual illusion.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um18.19.33.png" alt="" data-image-width="632" data-image-height="350">
+        <p class="u-align-center u-text u-text-default u-text-3"> "an oil painting of people&nbsp;<br>around a campfire"
+        </p>
+        <p class="u-align-justify u-text u-text-default u-text-4">"an oil painting of an old man"</p>
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um18.27.44.png" alt="" data-image-width="632" data-image-height="350">
+        <p class="u-align-center u-text u-text-default u-text-5"> "an oil painting of people&nbsp;<br>around a campfire"
+        </p>
+        <p class="u-align-justify u-text u-text-default u-text-6">"an orchestra in a concert hall"</p>
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/Bildschirmfoto2025-12-13um18.32.08.png" alt="" data-image-width="632" data-image-height="350">
+        <p class="u-align-justify u-text u-text-default u-text-7">"students learning"</p>
+        <p class="u-align-justify u-text u-text-default u-text-8">"people dancing"</p>
+      </div>
+    </section>
+    <section class="u-clearfix u-section-13" id="block-12">
+      <div class="u-clearfix u-sheet u-valign-middle-lg u-valign-middle-md u-valign-middle-sm u-valign-middle-xs u-sheet-1">
+        <h5 class="u-text u-text-default u-text-1"> 1.9 Hybrid Images </h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">Hybrid images combine two different visual interpretations into a single picture using diffusion models. The key idea is to separate image information by scale: one prompt controls the large, smooth structures of the image, while another prompt influences the fine details and textures. During denoising, these two influences are merged so that one image is visible from far away and the other appears when looking more closely. This extends the classic hybrid image idea from earlier projects into the diffusion setting. The examples below show how diffusion models can blend different concepts across frequencies to create images that change their appearance depending on how they are viewed.</p>
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-1" src="images/Bildschirmfoto2025-12-13um18.45.31.png" alt="" data-image-width="626" data-image-height="626">
+        <p class="u-align-justify u-text u-text-default u-text-3">"an oil painting of a snowy mountain village"</p>
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-2" src="images/Bildschirmfoto2025-12-13um18.45.31.png" alt="" data-image-width="626" data-image-height="626">
+        <p class="u-align-justify u-text u-text-default u-text-4">"a computer"</p>
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-3" src="images/Bildschirmfoto2025-12-13um18.56.23.png" alt="" data-image-width="628" data-image-height="628">
+        <img class="u-image u-image-contain u-image-default u-preserve-proportions u-image-4" src="images/Bildschirmfoto2025-12-13um18.56.23.png" alt="" data-image-width="628" data-image-height="628">
+        <p class="u-align-justify u-text u-text-default u-text-5">"an oil painting of people around a campfire"</p>
+        <p class="u-align-justify u-text u-text-default u-text-6">"a red apple"</p>
+        <img class="u-image u-image-contain u-image-default u-image-5" src="images/Bildschirmfoto2025-12-13um18.55.10.png" alt="" data-image-width="604" data-image-height="546">
+        <p class="u-align-justify u-text u-text-default u-text-7">"a red apple"</p>
+        <p class="u-align-justify u-text u-text-default u-text-8">"an oil painting of people around a campfire"</p>
+        <img class="u-image u-image-contain u-image-default u-image-6" src="images/Bildschirmfoto2025-12-13um18.55.10.png" alt="" data-image-width="604" data-image-height="546">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-14" id="block-14">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <h4 class="u-text u-text-default u-text-1"> Part B: Flow Matching from Scratch</h4>
+        <p class="u-align-justify u-text u-text-default u-text-2">Part B explores how diffusion-based generative models can be built and trained from scratch. Instead of relying on large pre-trained models, this part focuses on implementing the core components of a diffusion pipeline, including the neural network architecture, the noise process, and the sampling procedure. The goal is to understand how a model can learn to gradually remove noise and generate meaningful images on its own. By training and evaluating these models on simpler datasets, Part B provides insight into how diffusion models work internally and how design choices affect the quality and behavior of generated results.</p>
+        <h5 class="u-align-justify u-text u-text-default u-text-3">Part 1: Training a Single-Step Denoising UNet</h5>
+        <h5 class="u-align-justify u-text u-text-default u-text-4"> 1.1 Implementing the UNet</h5>
+        <p class="u-align-justify u-text u-text-default u-text-5">In this section the forward diffusion process was implemented, which defines how clean images are gradually corrupted with noise. By repeatedly adding small amounts of randomness, images are transformed step by step into nearly pure noise. This process creates the training signal for diffusion models, since the goal is to learn to reverse it.</p>
+        <h5 class="u-align-justify u-text u-text-default u-text-6"> 1.2 Using the UNet to Train a Denoiser</h5>
+        <h5 class="u-align-justify u-text u-text-default u-text-7"> 1.2.1 Training a Single-Step Denoiser</h5>
+        <p class="u-align-justify u-text u-text-default u-text-8">The goal is&nbsp;to train a UNet to predict the clean image. Therefore a UNet with downsampling and upsampling blocks, trained on MNIST was implemented.<br>
+          <br>The visualization below shows how different noise levels affect the digits. As sigma increases from 0.0 to 1.0, the digits progressively become more noisy:<br>
+        </p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um20.26.47.png" alt="" data-image-width="1722" data-image-height="1452">
+        <p class="u-align-justify u-text u-text-9">The model was trained using the following parameters:<br>
+          <br>- batch_size = 256<br>- learning_rate = 1e-4<br>- noise_level = 0.5<br>- hidden_dim = 128<br>- num_epochs = 5<br>
+          <br>The figure below shows how the model converges over 5 epochs. The plots on the right show the denoised images after training for 5 epochs.
+        </p>
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um21.25.07.png" alt="" data-image-width="874" data-image-height="1558">
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/Bildschirmfoto2025-12-13um21.08.30.png" alt="" data-image-width="1224" data-image-height="706">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-15" id="block-15">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h5 class="u-align-justify u-text u-text-default u-text-1"> 1.2.2 Out-of-Distribution Testing</h5>
+        <p class="u-align-justify u-text u-text-default u-text-2">Even for different noise level than the model was trained on it yields good results. However, the best result is achieved for the trained sigma of 0.5.</p>
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um21.15.41.png" alt="" data-image-width="2112" data-image-height="696">
+        <img class="u-expanded-width u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um21.29.18.png" alt="" data-image-width="2100" data-image-height="692">
+      </div>
+    </section>
+    <section class="u-clearfix u-section-16" id="block-16">
+      <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <h5 class="u-align-justify u-text u-text-default u-text-1"> 1.2.3 Denoising Pure Noise</h5>
+        <p class="u-align-justify u-text u-text-2">When denoising pure noise, the model produces images that look blurry and resemble a mix of several digits or something similar to an 8 rather than a clear number from 0 to 9. Instead of generating a specific digit, the outputs appear like averaged shapes or overlapping patterns from the training set.
+This happens because the model is trained using an MSE loss. With this loss, the model learns to output whatever minimizes the average squared error across all training images. When the input is pure noise, there is no information that tells the model which digit to create. In this situation, the safest choice for the model is to predict something close to the average of all digits in the dataset. This leads to fuzzy, ambiguous images that combine features of multiple digits. In this experiment, pure Gaussian noise with a signal strength of 1 was used as the input.
+Even though the generated images are not sharp, the training loss decreases smoothly and looks reasonable, which indicates that the model is learning as expected. The blurry results are therefore not a training failure, but a natural outcome of using pure noise inputs with an MSE criterion.</p>
+        <img class="u-image u-image-contain u-image-default u-image-1" src="images/Bildschirmfoto2025-12-13um22.27.53.png" alt="" data-image-width="1258" data-image-height="714">
+        <img class="u-image u-image-contain u-image-default u-image-2" src="images/Bildschirmfoto2025-12-13um22.28.05.png" alt="" data-image-width="2180" data-image-height="1538">
+        <h5 class="u-align-justify u-text u-text-default u-text-3"> Part 2: Training a Flow Matching Model</h5>
+        <p class="u-align-justify u-text u-text-default u-text-4"> In Part 2 of this project, we train a generative model using the <b><span style="font-weight: 400;">flow matching&nbsp;</span></b> approach on the MNIST handwritten digits dataset. The goal is to learn how to transform random noise into realistic digit images through a sequence of small steps, rather than generating images in a single pass. We first implement and train <span style="font-weight: 700;"><span style="font-weight: 400;">a</span><b><span style="font-weight: 400;">time</span><span style="font-weight: 400;">-conditioned</span><span style="font-weight: 400;">UNet</span></b>, <span style="font-weight: 400;">wh</span></span>ich takes a noisy image and a time value as input and predicts how the image should change at that step. After training, the model can generate new samples by starting from noise and repeatedly applying these predicted updates. We then extend this model to a <b><span style="font-weight: 400;">class</span><span style="font-weight: 400;">-conditional UNet</span></b>, allowing us to control which digit is generated. To improve sample quality, we use <span style="font-weight: 400;">classifier&nbsp;</span><span style="font-weight: 400;">free guidance</span>, which balances unconditional and class-conditioned generation during sampling.<br>
+        </p>
+        <h5 class="u-align-justify u-text u-text-5"> 2.1 Adding Time Conditioning to UNet</h5>
+        <h5 class="u-align-justify u-text u-text-default u-text-6"> 2.2 Training the UNet</h5>
+        <p class="u-align-justify u-text u-text-default u-text-7">A training loss curve plot for the time-conditioned UNet over the whole training process is shown below.</p>
+        <img class="u-image u-image-contain u-image-default u-image-3" src="images/Bildschirmfoto2025-12-14um15.13.12.png" alt="" data-image-width="1060" data-image-height="614">
+        <h5 class="u-align-justify u-text u-text-default u-text-8"> 2.3 Sampling from the UNet</h5>
+        <p class="u-align-justify u-text u-text-default u-text-9">Sampling results from the time-conditioned UNet for 1, 5, and 10 epochs. As expected the results are not perfect, but reasonably good.</p>
+        <img class="u-image u-image-contain u-image-default u-image-4" src="images/Bildschirmfoto2025-12-14um15.11.17.png" alt="" data-image-width="2482" data-image-height="618">
+        <img class="u-image u-image-contain u-image-default u-image-5" src="images/Bildschirmfoto2025-12-14um15.11.32.png" alt="" data-image-width="2482" data-image-height="618">
+        <img class="u-image u-image-contain u-image-default u-image-6" src="images/Bildschirmfoto2025-12-14um15.12.39.png" alt="" data-image-width="2482" data-image-height="618">
+        <h5 class="u-align-justify u-text u-text-default u-text-10"> 2.4 Adding Class-Conditioning to UNet</h5>
+        <p class="u-align-justify u-text u-text-11">To gain control over which digit the model generates, we extend the flow-matching UNet to be class-conditioned. During training, the model receives both the noisy image and the corresponding digit label, allowing it to learn class-specific generation patterns. We use classifier-free guidance, where the model is occasionally trained without class information so that, during sampling, conditional and unconditional predictions can be combined to improve sample quality and controllability. Below, we show the training loss for the class-conditional model and example samples generated for each digit class at different training stages.</p>
+        <p class="u-align-justify u-text u-text-12">Epoch 1</p>
+        <img class="u-image u-image-contain u-image-default u-image-7" src="images/Bildschirmfoto2025-12-14um16.30.01.png" alt="" data-image-width="1876" data-image-height="674">
+        <p class="u-align-justify u-text u-text-13">Epoch 5</p>
+        <img class="u-image u-image-contain u-image-default u-image-8" src="images/Bildschirmfoto2025-12-14um16.29.14.png" alt="" data-image-width="1876" data-image-height="674">
+        <p class="u-align-justify u-text u-text-14">Epoch 10</p>
+        <img class="u-image u-image-contain u-image-default u-image-9" src="images/Bildschirmfoto2025-12-14um16.29.16.png" alt="" data-image-width="1876" data-image-height="674">
+        <img class="u-image u-image-contain u-image-default u-image-10" src="images/Bildschirmfoto2025-12-14um16.31.31.png" alt="" data-image-width="1092" data-image-height="618">
+        <p class="u-align-justify u-text u-text-15"><b>Can we get rid of the annoying learning rate scheduler?</b>&nbsp;
+        </p>
+        <p class="u-align-justify u-text u-text-16"> In the implementation, the exponential learning-rate decay is not essential for training the model successfully. The task only requires training a time- and class-conditioned UNet to convergence, and this can be achieved using a fixed learning rate with Adam. In practice, we found that using a constant learning rate (e.g. 1\mathrm{e}{-2}) already leads to stable training and steadily decreasing loss for this relatively small model and dataset (MNIST). The scheduler mainly serves as an optional stabilization or fine-tuning mechanism, but its absence does not change the training objective, the algorithms, or the qualitative sampling results. </p>
+      </div>
+    </section>
+    
+    
+    
+    <footer class="u-align-center u-clearfix u-container-align-center u-footer u-grey-40 u-footer" id="footer"><div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">CS 180 - Project 5 - Melchior Kaeppel </p>
+      </div></footer>
+    </section>
+  
+</body></html>
