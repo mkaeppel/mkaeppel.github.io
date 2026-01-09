@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 3 - Parallelizing k-means | Melchior Käppel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        header {
+            background: white;
+            padding: 2rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .project-header {
+            margin-bottom: 3rem;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .project-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .project-description h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .project-description p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .project-description ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description li {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin: 1.5rem 0;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+            margin: 1rem 0;
+        }
+
+        .pdf-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 90vh;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .pdf-embed {
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="name">Melchior Käppel</div>
+        <a href="../index.html" class="back-link">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Back
+        </a>
+    </header>
+
+    <main>
+        <div class="project-header">
+            <h1 class="project-title">Lab 3: Stability-Based Clustering and Parallelization</h1>
+            <p class="project-subtitle">Stat 215A - UC Berkeley | Fall 2025</p>
+        </div>
+
+        <div class="project-description">
+            <h2>Project Overview</h2>
+            <p>
+                This lab investigates a principled approach to determining the optimal number of clusters in k-means 
+                clustering by measuring the stability of clustering solutions under data perturbations. Following the 
+                method introduced by Ben-Hur et al., we quantify stability through the similarity between clusterings 
+                obtained from different subsamples of the linguistic dialect dataset from Lab 2.
+            </p>
+            
+            <p>
+                The core challenge is computational: comparing two clusterings requires measuring pairwise co-membership 
+                relationships, which naively scales as O(q²) for q data points. For large datasets with tens of thousands 
+                of observations, this becomes prohibitively expensive when repeated hundreds of times across multiple values 
+                of k.
+            </p>
+
+            <h2>Efficient Similarity Computation</h2>
+            <p>To address this challenge, we implemented three versions of the Jaccard similarity coefficient:</p>
+            
+            <ul>
+                <li><strong>Normal (O(q²)):</strong> Constructs full q×q co-membership matrices using NumPy broadcasting. 
+                Conceptually simple but memory-intensive, requiring gigabytes of RAM for q ≈ 30,000.</li>
+                
+                <li><strong>Numba (O(q²)):</strong> Uses just-in-time compilation to eliminate Python overhead and reduce 
+                memory footprint to O(1), running ~18× faster than the normal implementation while maintaining correctness.</li>
+                
+                <li><strong>Fast (O(q)):</strong> Exploits the mathematical structure of cluster co-membership by counting 
+                pairs within each cluster using combinatorial formulas, avoiding all pairwise comparisons. Runs ~4,000× faster 
+                than the normal baseline.</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>Performance:</strong> For q = 29,000 points, the fast implementation completes in 1.2 milliseconds 
+                compared to 4.9 seconds for the normal approach—a speedup of over three orders of magnitude while producing 
+                identical results.</p>
+            </div>
+
+            <h2>Stability Analysis Algorithm</h2>
+            <p>
+                Using the efficient similarity function, we implemented Algorithm 1 from Ben-Hur et al., which performs 
+                repeated subsampling to estimate clustering stability:
+            </p>
+            
+            <ul>
+                <li>For each k = 2, ..., 10 clusters</li>
+                <li>Repeat B = 200 trials</li>
+                <li>In each trial: draw two independent subsamples (70% of data), run k-means on each, compute Jaccard 
+                similarity on their intersection</li>
+                <li>Aggregate results into stability distributions</li>
+            </ul>
+
+            <p>
+                The implementation uses joblib for parallel processing across CPU cores, with careful parameter tuning 
+                (n_init=20, max_iter=500, Elkan's algorithm) to balance convergence guarantees with computational efficiency. 
+                The full analysis completed in approximately 5 hours on an 8-core MacBook Air M4.
+            </p>
+
+            <h2>Key Findings</h2>
+            <p>
+                The stability curves revealed the expected pattern: high, consistent similarity values for small k that 
+                progressively decrease as k increases. Notably, k=2 exhibited bimodal behavior with similarity peaks at 
+                both ~0.6 and ~0.9, indicating that k-means alternates between two distinct two-cluster solutions depending 
+                on initialization—likely corresponding to North-South versus East-West divisions in the U.S. dialect data.
+            </p>
+
+            <div class="highlight">
+                <p><strong>Optimal k:</strong> Based on stability distributions and visual inspection of geographic clusters, 
+                k=3 emerged as the most defensible choice. This value avoids the bimodal instability of k=2 while remaining 
+                in the high-plateau region before the marked decline at larger k, balancing interpretability with robustness.</p>
+            </div>
+
+            <p>
+                The analysis also included comparisons with classical methods (Elbow, Silhouette, Gap statistic), demonstrating 
+                that stability-based selection provides a more principled and interpretable criterion for categorical data than 
+                heuristic approaches based on Euclidean distance metrics.
+            </p>
+        </div>
+
+        <div class="pdf-container">
+            <embed src="./lab3.pdf" class="pdf-embed" type="application/pdf">
+        </div>
+    </main>
+</body>
+</html>

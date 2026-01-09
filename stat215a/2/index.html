@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2 - Dialectometry | Melchior Käppel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        header {
+            background: white;
+            padding: 2rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .project-header {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .download-btn {
+            background: #3498db;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .download-btn:hover {
+            background: #2980b9;
+        }
+
+        .project-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .project-description h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .project-description p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .project-description ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description li {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+            margin: 1.5rem 0;
+        }
+
+        .pdf-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 90vh;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .pdf-embed {
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="name">Melchior Käppel</div>
+        <a href="../index.html" class="back-link">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Back
+        </a>
+    </header>
+
+    <main>
+        <div class="project-header">
+            <div class="header-content">
+                <h1 class="project-title">Lab 2: Dialectometry and Linguistic Variation</h1>
+                <p class="project-subtitle">Stat 215A - UC Berkeley | Fall 2025</p>
+            </div>
+            <!-- <a href="./lab2.pdf" download class="download-btn">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                Download PDF
+            </a> -->
+        </div>
+
+        <div class="project-description">
+            <h2>Project Overview</h2>
+            <p>
+                This lab explores the geography of American English through computational dialectometry—a quantitative 
+                approach to studying how language varies across regions. Using data from a large-scale dialect survey 
+                with nearly 50,000 respondents across the United States, we investigate whether modern statistical 
+                methods can uncover meaningful regional linguistic patterns and assess the stability of these findings.
+            </p>
+            
+            <p>
+                The dataset consists of responses to dozens of lexical questions (e.g., "What do you call a sweetened 
+                carbonated beverage?") paired with geographic coordinates. This structure allows us to explore three 
+                central questions: What broad geographic patterns exist? Can dimensionality reduction reveal underlying 
+                structure? How stable are the detected clusters under perturbations?
+            </p>
+
+            <h2>Data Cleaning and Preparation</h2>
+            <p>
+                Before analysis, substantial data cleaning was required. The original dataset contained 540 missing cities, 
+                1,020 missing coordinates, and inconsistent formatting. We implemented a two-stage imputation strategy:
+            </p>
+            <ul>
+                <li>When location names were present but coordinates missing, we matched ZIP codes to their central coordinates</li>
+                <li>When coordinates existed but names were missing, we performed reverse geocoding using spatial joins</li>
+            </ul>
+            <p>
+                After cleaning, 47,317 complete records remained. Survey responses were aggregated into 1°×1° latitude-longitude 
+                grid cells to reduce overplotting and stabilize local variation while preserving regional patterns.
+            </p>
+
+            <h2>Dimensionality Reduction</h2>
+            <p>
+                Three complementary dimension reduction techniques were applied to visualize high-dimensional lexical variation:
+            </p>
+            
+            <ul>
+                <li><strong>Principal Component Analysis (PCA):</strong> Revealed broad continuous gradients. PC1 (4.0% variance) 
+                separates South from North/Midwest, while PC2 (2.8% variance) highlights East/West contrasts. PCA smooths 
+                regional patterns into interpretable axes of variation.</li>
+                
+                <li><strong>Nonnegative Matrix Factorization (NMF):</strong> Identified additive "dialect profiles" that 
+                emphasize localized clusters rather than opposing gradients. NMF components highlight the South, Midwest, 
+                and distinctive regional features like Wisconsin's "bubbler" usage, producing sharper geographic boundaries 
+                than PCA.</li>
+                
+                <li><strong>t-SNE:</strong> A nonlinear technique that preserves local neighborhood structure, revealing 
+                fine-grained clusters and subregional patterns. While t-SNE sharpens boundaries between dialect areas, it 
+                sacrifices global interpretability for local resolution.</li>
+            </ul>
+
+            <p>
+                These methods demonstrate that American English dialectal variation can be meaningfully summarized along a 
+                small number of dimensions, confirming known regional divisions (South, Midwest, Northeast) while also 
+                highlighting unexpected local phenomena.
+            </p>
+
+            <h2>Clustering Analysis</h2>
+            <p>
+                To partition the data into discrete dialect regions, three clustering approaches were compared:
+            </p>
+            
+            <ul>
+                <li><strong>K-means clustering:</strong> Produced interpretable geographic divisions for k=3 (South, Midwest, 
+                Northeast/West Coast) but was sensitive to initialization and sometimes created spurious isolated clusters 
+                at higher k values.</li>
+                
+                <li><strong>NMF-based clustering:</strong> Applied winner-takes-all assignment to NMF components, yielding 
+                clearer regional boundaries than k-means by leveraging additive dialect profiles. Clusters were more 
+                interpretable as they directly reflected underlying variant distributions.</li>
+                
+                <li><strong>Hierarchical clustering:</strong> Revealed the nested structure of linguistic similarity through 
+                dendrograms, showing how regions merge at different scales. Ward's method produced stable three-cluster 
+                solutions consistent with k-means and NMF, while avoiding isolated single-cell outliers.</li>
+            </ul>
+
+            <div class="highlight">
+                <p><strong>Key Finding:</strong> All three methods consistently identified the same major dialect regions 
+                (South, Midwest, Northeast/West Coast), suggesting these patterns are robust features of the data rather 
+                than methodological artifacts. However, finer subdivisions and boundary locations varied across methods, 
+                indicating that dialect transitions are gradual continua rather than sharp lines.</p>
+            </div>
+
+            <h2>Stability Analysis</h2>
+            <p>
+                To test robustness, k-means clustering (k=5) was re-run under two perturbations: changing random seeds 
+                and bootstrapping the dataset by subsampling 60-80% of grid cells. The major regional clusters remained 
+                stable across all perturbations, but boundary regions and smaller subdivisions showed variability.
+            </p>
+            <p>
+                This confirms that the core three-region structure (South, Midwest, Northeast/West Coast) is a genuine 
+                geographic signal, while finer distinctions should be interpreted with caution.
+            </p>
+
+            <h2>Conclusion</h2>
+            <p>
+                This analysis demonstrates that large-scale dialect survey data combined with modern statistical methods 
+                can reliably recover known regional linguistic patterns. The consistent results across PCA, NMF, t-SNE, 
+                k-means, and hierarchical clustering provide strong evidence for stable dialect regions in American English. 
+                However, the gradual transitions between regions and sensitivity of fine-scale patterns to methodological 
+                choices underscore the continuum nature of linguistic variation.
+            </p>
+        </div>
+
+        <div class="pdf-container">
+            <embed src="./lab2.pdf" class="pdf-embed" type="application/pdf">
+        </div>
+        <!-- <a href="./lab2.pdf" download></a> -->
+    </main>
+</body>
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1 - PECARN TBI Analysis | Melchior Käppel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        header {
+            background: white;
+            padding: 2rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .project-header {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .download-btn {
+            background: #3498db;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .download-btn:hover {
+            background: #2980b9;
+        }
+
+        .project-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .project-description h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .project-description p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .project-description ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-description li {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 1.5rem 0;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+            margin: 1.5rem 0;
+        }
+
+        .pdf-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 90vh;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .pdf-embed {
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="name">Melchior Käppel</div>
+        <a href="../index.html" class="back-link">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Back
+        </a>
+    </header>
+
+    <main>
+        <div class="project-header">
+            <div class="header-content">
+                <h1 class="project-title">Lab 1: Pediatric Head Trauma Risk Prediction</h1>
+                <p class="project-subtitle">Stat 215A - UC Berkeley | Fall 2025</p>
+            </div>
+            <!-- <a href="./lab1.pdf" download class="download-btn">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                </svg>
+                Download PDF
+            </a> -->
+        </div>
+
+        <div class="project-description">
+            <h2>Project Overview</h2>
+            <p>
+                Traumatic brain injury (TBI) is a leading cause of death and disability in children, accounting for 
+                thousands of deaths and over half a million emergency department visits annually in the United States. 
+                When a child presents with head trauma, clinicians face a critical dilemma: the need to rapidly detect 
+                clinically-important traumatic brain injuries (ciTBI) while avoiding unnecessary CT scans that expose 
+                children to ionizing radiation and its associated cancer risk.
+            </p>
+            
+            <p>
+                This lab analyzes the PECARN (Pediatric Emergency Care Applied Research Network) dataset—a landmark 
+                prospective cohort study of 42,412 children with minor head trauma (GCS 14-15) collected across 25 
+                North American emergency departments. The goal is to identify which patient characteristics are most 
+                strongly associated with ciTBI and to evaluate whether data-driven models can improve upon existing 
+                clinical decision rules.
+            </p>
+
+            <h2>The Clinical Context</h2>
+            <div class="info-box">
+                <p><strong>The CT Decision Dilemma:</strong> While CT scanning is the gold standard for diagnosing TBI, 
+                it carries measurable risks. The challenge is to identify children at very low risk of ciTBI for whom 
+                CT can safely be avoided, thereby reducing radiation exposure without missing serious injuries.</p>
+            </div>
+
+            <h2>Data Cleaning and Preparation</h2>
+            <p>
+                Following the PCS (Predictability, Computability, Stability) framework from Bin Yu's Veridical Data 
+                Science, the analysis began with systematic data cleaning:
+            </p>
+            
+            <ul>
+                <li><strong>Variable Selection:</strong> Variables were grouped into four categories—participant data, 
+                hard fact symptoms (e.g., GCS, skull fracture), reported symptoms (e.g., headache, vomiting), and 
+                outcomes—prioritizing clinician-observed "hard facts" over subjective self-reports.</li>
+                
+                <li><strong>Handling Missingness:</strong> Sentinel codes (91, 92) representing "unknown" or "not 
+                applicable" were recoded to NaN. Variables with implausible values were identified and corrected.</li>
+                
+                <li><strong>Derived Indicators:</strong> Composite predictors were created to align with PECARN rules, 
+                including LOCbinary (loss of consciousness: Yes/Suspected vs. No), LOCgt5s (LOC duration >5 seconds), 
+                and binary injury severity flags.</li>
+                
+                <li><strong>Quality Control:</strong> Cases with missing Age, GCS, AMS, SkullFracture, or ciTBI were 
+                dropped (427 rows), resulting in a cleaned dataset of 42,972 observations—consistent with the ~500 
+                excluded cases reported in the original PECARN study.</li>
+            </ul>
+
+            <h2>Exploratory Findings</h2>
+            <p>
+                The exploratory analysis revealed clear patterns in how clinical predictors relate to ciTBI outcomes:
+            </p>
+
+            <h3>Strong Clinical Predictors</h3>
+            <p>Several variables showed consistently high correlations with ciTBI across age groups:</p>
+            <ul>
+                <li><strong>AlteredMentalStatus:</strong> Captures confusion, agitation, or slow responses—a key 
+                neurological red flag</li>
+                <li><strong>SkullFracture:</strong> Palpable or basilar skull fracture signs are high-specificity 
+                indicators of serious injury</li>
+                <li><strong>NeurologicalDeficit:</strong> Any focal neurological deficit (e.g., motor weakness) 
+                strongly predicts ciTBI despite low prevalence</li>
+                <li><strong>Seizure:</strong> Post-injury seizures are another strong indicator of brain trauma</li>
+            </ul>
+
+            <h3>Age-Specific Patterns</h3>
+            <p>
+                The analysis revealed important age stratification effects. In younger children (<2 years), objective 
+                clinical signs dominated, while subjective symptoms like headache and amnesia became informative only 
+                in older children who could reliably self-report. This aligns with PECARN's age-specific decision rules.
+            </p>
+
+            <h3>Categorical Risk Gradients</h3>
+            <p>
+                Dose-response patterns emerged for several predictors: higher injury severity (50% ciTBI for moderate, 
+                44% for high vs. 4% for low), larger hematoma size, and multiple vomiting episodes all correlated with 
+                increased ciTBI risk. However, subjective variables like HeadacheSeverity showed weak discrimination 
+                and >70% missingness, limiting their predictive utility.
+            </p>
+
+            <div class="highlight">
+                <p><strong>False Positives Analysis:</strong> Comparing unnecessary CTs (no ciTBI) to necessary CTs 
+                (ciTBI present) revealed that common but weak predictors like hematomas and headache were frequently 
+                present in children who received unnecessary scans, while strong indicators like altered mental status 
+                and loss of consciousness were concentrated in true ciTBI cases.</p>
+            </div>
+
+            <h2>Predictive Modeling</h2>
+            <p>
+                Two complementary classification models were trained to predict ciTBI:
+            </p>
+            
+            <ul>
+                <li><strong>Logistic Regression:</strong> Chosen for interpretability and consistency with PECARN's 
+                simple decision rules. Achieved AUC = 0.93 with balanced class weights and robust convergence 
+                (max_iter=2000).</li>
+                
+                <li><strong>Random Forest:</strong> Trained with 200 trees to capture potential non-linear interactions. 
+                Achieved AUC = 0.90, providing a robustness check against the linear model while maintaining strong 
+                discrimination.</li>
+            </ul>
+
+            <h2>Stability Analysis</h2>
+            <p>
+                To test robustness, both models were retrained after perturbing how "suspected" loss of consciousness 
+                (4.9% of cases) was coded. The ROC curves showed near-perfect overlap with identical AUC values under 
+                perturbation, confirming that model predictions are stable to reasonable preprocessing choices.
+            </p>
+
+            <p>
+                Additionally, a reality check against published PECARN statistics confirmed consistency: the cleaned 
+                dataset's ciTBI prevalence (1.7%) closely matched the reported 0.9%, and the distribution of key 
+                predictors aligned with expected clinical patterns.
+            </p>
+
+            <h2>Key Takeaways</h2>
+            <div class="info-box">
+                <p><strong>Clinical Implications:</strong> The analysis confirms that simple, interpretable predictors 
+                based on objective clinical signs (altered mental status, skull fracture, neurological deficit) remain 
+                highly effective for ciTBI risk stratification. While flexible models like random forests achieve strong 
+                performance, the marginal gains over logistic regression may not justify reduced interpretability in 
+                high-stakes clinical decision-making.</p>
+            </div>
+
+            <p>
+                The substantial number of unnecessary CT scans highlights an ongoing challenge: many children undergo 
+                radiation exposure despite low ciTBI risk. Future work could focus on refining decision rules to better 
+                identify these low-risk patients while maintaining sensitivity for detecting serious injuries.
+            </p>
+
+            <h2>PCS Framework Application</h2>
+            <p>
+                This analysis demonstrates the value of the PCS framework:
+            </p>
+            <ul>
+                <li><strong>Predictability:</strong> Both models achieved strong discrimination (AUC 0.90-0.93), 
+                validating the predictive signal in clinical variables</li>
+                <li><strong>Computability:</strong> Careful data cleaning, derived indicators, and appropriate handling 
+                of missingness ensured reproducible and interpretable results</li>
+                <li><strong>Stability:</strong> Perturbation tests confirmed that findings are robust to preprocessing 
+                choices, not artifacts of arbitrary decisions</li>
+            </ul>
+        </div>
+
+        <div class="pdf-container">
+            <embed src="./lab1.pdf" class="pdf-embed" type="application/pdf">
+        </div>
+    </main>
+</body>
+</html>
