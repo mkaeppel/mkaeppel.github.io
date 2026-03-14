@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master's Thesis | Melchior Käppel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        header {
+            background: white;
+            padding: 2rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .project-header {
+            margin-bottom: 2rem;
+        }
+
+        .project-title {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 0;
+        }
+
+        .project-paper {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .project-paper h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 2.5rem 0 1rem;
+        }
+
+        .project-paper h2:first-child {
+            margin-top: 0;
+        }
+
+        .project-paper p {
+            font-size: 1.05rem;
+            line-height: 1.9;
+            color: #555;
+            margin-bottom: 1.15rem;
+        }
+
+        .project-paper p:last-child {
+            margin-bottom: 0;
+        }
+
+        .references {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e8ecf1;
+        }
+
+        .references ol {
+            padding-left: 1.4rem;
+        }
+
+        .references li {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .project-paper {
+                padding: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="name">Melchior Käppel</div>
+        <a href="../index.html" class="back-link">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Back
+        </a>
+    </header>
+
+    <main>
+        <div class="project-header">
+            <h1 class="project-title">Multimodal Investigations of Listening Effort in Children Across Speech Intelligibility Levels</h1>
+            <p class="project-subtitle">RWTH Aachen University</p>
+        </div>
+
+        <article class="project-paper">
+            <h2>Project Overview</h2>
+            <p>The ability to understand speech and comprehend language plays an integral role in communication, social interaction, and cognitive development. Especially in children, hearing and processing speech is essential not only for gaining knowledge but also for the development of linguistic and social skills. Speech processing is therefore not a purely sensory task; it results from an interaction between auditory perception, linguistic abilities, and cognitive resources such as attention and performance, all of which shape children's development and mental health.</p>
+            <p>In real-world settings, especially in educational environments, acoustic conditions are rarely ideal. Listening and paying attention to speech become challenging and demanding tasks. Background noise and multiple simultaneous speakers increase the load on the auditory system, causing cognitive, attentional, and perceptual costs of speech processing, commonly referred to as listening effort. Listening effort is typically measured using subjective questionnaires, behavioral measures based on single- and dual-task paradigms, and neurophysiological methods.</p>
+            <p>Previous studies have shown that listening effort in adults does not increase linearly with task difficulty. Instead, it often follows a nonlinear relationship that reaches a maximum at intermediate intelligibility levels and is reduced under very easy or very difficult listening conditions. While this pattern has been studied primarily in adults, and child-focused work has examined related acoustic scenarios, comparable relationships in children have so far received little attention, particularly under very low speech intelligibility conditions.</p>
+            <p>The goal of this work is to investigate listening effort across different levels of speech intelligibility in children aged ten to twelve. A central question is whether a nonlinear relationship between speech intelligibility and listening effort can be observed in neurophysiological and behavioral data, and how these measures compare to those reported in adults.</p>
+            <p>For data collection, a listening experiment specifically designed for children is used, in which different dimensions of listening effort under variable intelligibility levels are measured using self-report questionnaires, behavioral measures such as response time in a single-task paradigm, and neurophysiological methods such as electroencephalography (EEG). Speech intelligibility is systematically adapted by varying the signal-to-noise ratio relative to the individual speech reception threshold.</p>
+            <p>The analysis focuses on modeling the relationship between speech intelligibility and listening effort, including fitting nonlinear functions to the behavioral and neurophysiological data, such as parietal alpha activity in the EEG. The findings are intended to provide a more differentiated understanding of listening effort in children and its relationship to speech intelligibility, while extending fundamental research on auditory processing and cognitive load beyond adult listeners.</p>
+            <p>Beyond theory, the results are expected to inform practical applications such as the acoustic design of listening environments for children and the development of child-specific hearing technologies, both of which play an important role in children's development and well-being.</p>
+
+            <section class="references">
+                <h2>References</h2>
+                <ol>
+                    <li>Kemper, M., Denk, F., Husstedt, H., &amp; Obleser, J. (2025). Acoustically Transparent Hearing Aids Increase Physiological Markers of Listening Effort. <em>Trends in Hearing, 29</em>, 23312165251333225. https://doi.org/10.1177/23312165251333225</li>
+                    <li>Klatte, M., Bergstrom, K., &amp; Lachmann, T. (2013). Does noise affect learning? A short review on noise effects on cognitive performance in children. <em>Frontiers in Psychology, 4</em>. https://doi.org/10.3389/fpsyg.2013.00578</li>
+                    <li>Pichora-Fuller, M. K., Kramer, S. E., Eckert, M. A., Edwards, B., Hornsby, B. W., Humes, L. E., Lemke, U., Lunner, T., Matthen, M., Mackersie, C. L., Naylor, G., Phillips, N. A., Richter, M., Rudner, M., Sommers, M. S., Tremblay, K. L., &amp; Wingfield, A. (2016). Hearing impairment and cognitive energy: The Framework for Understanding Effortful Listening (FUEL). <em>Ear &amp; Hearing, 37</em>(1), 5S-27S. https://doi.org/10.1097/AUD.0000000000000312</li>
+                    <li>Prodi, N., &amp; Visentin, C. (2019). Impact of background noise fluctuation and reverberation on response time in a speech reception task. <em>Journal of Speech, Language, and Hearing Research, 62</em>(11), 4179-4195. https://doi.org/10.1044/2019_JSLHR-H-19-0180</li>
+                    <li>Seitz, J., &amp; Fels, J. (2025). Differences between subjective and behavioral listening effort in children across age and task complexity. <em>Ear &amp; Hearing</em>. https://doi.org/10.1097/AUD.0000000000001759</li>
+                    <li>Shield, B. M., &amp; Dockrell, J. E. (2003). The effects of noise on children at school: A review. <em>Building Acoustics, 10</em>(2), 97-116. https://doi.org/10.1260/135101003768965960</li>
+                    <li><em>World Report on Hearing</em> (1st ed.). (2021). World Health Organization. https://www.who.int/publications/i/item/9789240020481</li>
+                    <li>Wu, Y.-H., Stangl, E., Zhang, X., Perkins, J., &amp; Eilers, E. (2016). Psychometric functions of dual-task paradigms for measuring listening effort. <em>Ear &amp; Hearing, 37</em>(6), 660-670. https://doi.org/10.1097/AUD.0000000000000335</li>
+                </ol>
+            </section>
+        </article>
+    </main>
+</body>
+</html>

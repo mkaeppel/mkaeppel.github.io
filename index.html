@@ -64,6 +64,7 @@
             padding: 0 2rem;
         }
 
+        .about-section,
         .projects-section {
             margin-bottom: 4rem;
         }
@@ -72,6 +73,56 @@
             font-size: 2rem;
             margin-bottom: 2rem;
             color: #2c3e50;
+        }
+
+        .about-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .portrait-frame {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #dfe9f3 0%, #ffffff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .portrait-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: none;
+            background: #fff;
+        }
+
+        .portrait-placeholder {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .about-text p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p:last-child {
+            margin-bottom: 0;
         }
 
         .courses-grid {
@@ -117,10 +168,18 @@
             background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
         }
 
+        .course-card:nth-child(5) .course-image {
+            background: linear-gradient(135deg, #1f1c2c 0%, #928dab 100%);
+        }
+
+        .course-card:nth-child(6) .course-image {
+            background: linear-gradient(135deg, #355c7d 0%, #6c5b7b 50%, #c06c84 100%);
+        }
+
         .course-image img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             object-position: center;
             display: none;
         }
@@ -149,6 +208,10 @@
                 text-align: center;
             }
 
+            .about-card {
+                grid-template-columns: 1fr;
+            }
+
             .courses-grid {
                 grid-template-columns: 1fr;
             }
@@ -175,10 +238,37 @@
     </header>
 
     <main>
+        <section class="about-section">
+            <!-- <h2 class="section-title">About Me</h2> -->
+            <div class="about-card">
+                <div class="portrait-frame" data-portrait-root=".">
+                    <img alt="Portrait of Melchior Käppel">
+                    <span class="portrait-placeholder">Portrait</span>
+                </div>
+                <div class="about-text">
+                    <p>I am a M.Sc. Electrical Engineering student specializing in Acoustics and Audio Technologies. I am interested in 
+                        spatial audio, hearing health, AI/ML, and auditory neuroscience, and I’m always excited to explore new ideas in the field of Acoustics and beyond.
+                    </p>
+                    <p>This page collects selected projects and research work across the Institute for Hearing Technology and Acoustics at RWTH Aachen University, 
+                        UC Berkeley and Apple.</p>
+                </div>
+            </div>
+        </section>
+
         <section class="projects-section">
             <h2 class="section-title">Projects</h2>
-            
+
             <div class="courses-grid">
+
+                <a href="./masters-thesis/index.html" class="course-card">
+                    <div class="course-image" data-thumbnail-dir="./masters-thesis/">
+                        <img alt="Master's thesis thumbnail">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Multimodal Investigations on Listening Effort in Children</h3>
+                        <p class="course-code">Master's Thesis | RWTH Aachen University</p>
+                    </div>
+                </a>
                 <a href="./stat215a/index.html" class="course-card">
                     <div class="course-image" data-thumbnail-dir="./stat215a/">
                         <img alt="Stat 215A thumbnail">
@@ -196,6 +286,16 @@
                     <div class="course-content">
                         <h3 class="course-title">Computer Vision and Deep Learning</h3>
                         <p class="course-code">CS 180/280A | UC Berkeley</p>
+                    </div>
+                </a>
+
+                <a href="./apple-internship/index.html" class="course-card">
+                    <div class="course-image" data-thumbnail-dir="./apple-internship/">
+                        <img alt="Apple internship thumbnail">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Hearing Health Research & Development</h3>
+                        <p class="course-code">Internship | Apple Inc.</p>
                     </div>
                 </a>
 
@@ -218,11 +318,39 @@
                         <p class="course-code">Bachelor's Thesis | RWTH Aachen University</p>
                     </div>
                 </a>
+
+                </a>
             </div>
         </section>
     </main>
     <script>
+        const portraitExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
         const thumbnailExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+        document.querySelectorAll('.portrait-frame[data-portrait-root]').forEach((container) => {
+            const image = container.querySelector('img');
+            const placeholder = container.querySelector('.portrait-placeholder');
+            const baseDir = container.dataset.portraitRoot;
+            let extensionIndex = 0;
+
+            const tryNextPortrait = () => {
+                if (extensionIndex >= portraitExtensions.length) {
+                    return;
+                }
+
+                image.src = `${baseDir}/portrait.${portraitExtensions[extensionIndex]}`;
+                extensionIndex += 1;
+            };
+
+            image.addEventListener('load', () => {
+                image.style.display = 'block';
+                placeholder.style.display = 'none';
+            });
+
+            image.addEventListener('error', tryNextPortrait);
+
+            tryNextPortrait();
+        });
 
         document.querySelectorAll('.course-image[data-thumbnail-dir]').forEach((container) => {
             const image = container.querySelector('img');

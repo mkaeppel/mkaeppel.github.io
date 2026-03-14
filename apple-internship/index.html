@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hearing Health Research & Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        header {
+            background: white;
+            padding: 2rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .project-header {
+            margin-bottom: 3rem;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .project-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .project-description h2,
+        .gallery-section h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .project-description p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .project-description p:last-child {
+            margin-bottom: 0;
+        }
+
+        .gallery-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            background: #f1f3f5;
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 220px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-empty {
+            color: #7f8c8d;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="name">Melchior Käppel</div>
+        <a href="../index.html" class="back-link">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Back
+        </a>
+    </header>
+
+    <main>
+        <div class="project-header">
+            <h1 class="project-title">Hearing Health Research & Development</h1>
+            <p class="project-subtitle">Internship at Apple in Cupertino, CA</p>
+        </div>
+
+        <div class="project-description">
+            <h2>Project Overview</h2>
+            <p>During my internship with Apple’s Acoustics Hearing Health R&D team in Cupertino, CA, I
+                developed and prototyped hardware and signal processing algorithms for wearable devices and Hearing Health features in Apple's ecosystem.
+                I led the bring-up and refinement of novel wireless technologies and DSP methods for acoustic sensing devices and,
+                 therefore designed and evaluated large scale user studies in addition to acoustic measurements and calibrations.
+                 My day-to-day work included cross-functional collaboration with hardware, software, user experience design, health, and user studies teams.
+                 I regularly presented my project progress and independently explored early-stage concepts to Apple’s (Acoustics) leadership.
+            </p>
+        </div>
+
+        <section class="gallery-section">
+            <h2>Gallery</h2>
+            <div class="gallery-grid" id="gallery-grid">
+                <div class="gallery-item"><img alt="Apple internship gallery image 1"></div>
+                <div class="gallery-item"><img alt="Apple internship gallery image 2"></div>
+                <div class="gallery-item"><img alt="Apple internship gallery image 3"></div>
+                <div class="gallery-item"><img alt="Apple internship gallery image 4"></div>
+                <div class="gallery-item"><img alt="Apple internship gallery image 5"></div>
+                <div class="gallery-item"><img alt="Apple internship gallery image 6"></div>
+            </div>
+            <p class="gallery-empty" id="gallery-empty">Add images named `gallery-1.jpg`, `gallery-2.jpg`, and so on inside `/apple-internship/` to populate this gallery automatically. `png`, `webp`, and `gif` also work.</p>
+        </section>
+    </main>
+
+    <script>
+        const galleryExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+        const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+        const galleryEmpty = document.getElementById('gallery-empty');
+        let visibleCount = 0;
+
+        galleryItems.forEach((item, index) => {
+            const image = item.querySelector('img');
+            let extensionIndex = 0;
+
+            const tryNextImage = () => {
+                if (extensionIndex >= galleryExtensions.length) {
+                    return;
+                }
+
+                image.src = `./gallery-${index + 1}.${galleryExtensions[extensionIndex]}`;
+                extensionIndex += 1;
+            };
+
+            image.addEventListener('load', () => {
+                item.style.display = 'flex';
+                visibleCount += 1;
+                if (visibleCount > 0) {
+                    galleryEmpty.style.display = 'none';
+                }
+            });
+
+            image.addEventListener('error', tryNextImage);
+
+            tryNextImage();
+        });
+    </script>
+</body>
+</html>
