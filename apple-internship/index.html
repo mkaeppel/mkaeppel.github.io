@@ -77,6 +77,15 @@
             margin-bottom: 3rem;
         }
 
+        .project-preview {
+            display: block;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
         .project-description h2,
         .gallery-section h2 {
             font-size: 1.5rem;
@@ -101,6 +110,15 @@
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .preview-frame {
+            width: 100%;
+            max-height: 52vh;
+            border-radius: 12px;
+            background: #f1f3f5;
+            object-fit: contain;
+            display: block;
         }
 
         .gallery-grid {
@@ -163,6 +181,14 @@
             <p class="project-subtitle">Internship at Apple in Cupertino, CA</p>
         </div>
 
+        <a href="https://www.apple.com/airpods-pro/hearing-health/" class="project-preview" target="_blank" rel="noopener noreferrer">
+            <img
+                class="preview-frame"
+                src="thumbnail.jpeg"
+                alt="Apple internship preview"
+            >
+        </a>
+
         <div class="project-description">
             <h2>Project Overview</h2>
             <p>During my internship with Apple’s Acoustics Hearing Health R&D team in Cupertino, CA, I
@@ -174,8 +200,7 @@
             </p>
         </div>
 
-        <section class="gallery-section">
-            <h2>Gallery</h2>
+        <!-- <section class="gallery-section">
             <div class="gallery-grid" id="gallery-grid">
                 <div class="gallery-item"><img alt="Apple internship gallery image 1"></div>
                 <div class="gallery-item"><img alt="Apple internship gallery image 2"></div>
@@ -185,10 +210,10 @@
                 <div class="gallery-item"><img alt="Apple internship gallery image 6"></div>
             </div>
             <p class="gallery-empty" id="gallery-empty">Add images named `gallery-1.jpg`, `gallery-2.jpg`, and so on inside `/apple-internship/` to populate this gallery automatically. `png`, `webp`, and `gif` also work.</p>
-        </section>
+        </section> -->
     </main>
 
-    <script>
+    <!-- <script>
         const galleryExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
         const galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
         const galleryEmpty = document.getElementById('gallery-empty');
@@ -219,6 +244,6 @@
 
             tryNextImage();
         });
-    </script>
+    </script> -->
 </body>
 </html>
