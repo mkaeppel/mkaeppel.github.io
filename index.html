@@ -76,7 +76,7 @@
 
         .courses-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -101,16 +101,27 @@
             width: 100%;
             height: 200px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-            font-weight: bold;
+            position: relative;
+            overflow: hidden;
         }
 
         .course-card:nth-child(2) .course-image {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .course-card:nth-child(3) .course-image {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .course-card:nth-child(4) .course-image {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
         }
 
         .course-content {
@@ -168,22 +179,72 @@
             
             <div class="courses-grid">
                 <a href="./stat215a/index.html" class="course-card">
-                    <div class="course-image"></div>
+                    <div class="course-image" data-thumbnail-dir="./stat215a/">
+                        <img alt="Stat 215A thumbnail">
+                    </div>
                     <div class="course-content">
                         <h3 class="course-title">Applied Data Science and Machine Learning</h3>
-                        <p class="course-code">Stat 215A - UC Berkeley</p>
+                        <p class="course-code">Stat 215A | UC Berkeley</p>
                     </div>
                 </a>
 
                 <a href="./cs180/index.html" class="course-card">
-                    <div class="course-image"></div>
+                    <div class="course-image" data-thumbnail-dir="./cs180/">
+                        <img alt="CS 180 thumbnail">
+                    </div>
                     <div class="course-content">
-                        <h3 class="course-title">Computer Vision</h3>
-                        <p class="course-code">CS 180/280A - UC Berkeley</p>
+                        <h3 class="course-title">Computer Vision and Deep Learning</h3>
+                        <p class="course-code">CS 180/280A | UC Berkeley</p>
+                    </div>
+                </a>
+
+                <a href="./seminarIHTA/index.html" class="course-card">
+                    <div class="course-image" data-thumbnail-dir="./seminarIHTA/">
+                        <img alt="Seminar thumbnail">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">The Complex Image Method for Urban Scenarios</h3>
+                        <p class="course-code">Seminar Project | RWTH Aachen University</p>
+                    </div>
+                </a>
+
+                <a href="./bachelor-thesis/index.html" class="course-card">
+                    <div class="course-image" data-thumbnail-dir="./bachelor-thesis/">
+                        <img alt="Bachelor thesis thumbnail">
+                    </div>
+                    <div class="course-content">
+                        <h3 class="course-title">Ambisonics & Irregular Near-Field Loudspeaker Arrays</h3>
+                        <p class="course-code">Bachelor's Thesis | RWTH Aachen University</p>
                     </div>
                 </a>
             </div>
         </section>
     </main>
+    <script>
+        const thumbnailExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+        document.querySelectorAll('.course-image[data-thumbnail-dir]').forEach((container) => {
+            const image = container.querySelector('img');
+            const baseDir = container.dataset.thumbnailDir;
+            let extensionIndex = 0;
+
+            const tryNextThumbnail = () => {
+                if (extensionIndex >= thumbnailExtensions.length) {
+                    return;
+                }
+
+                image.src = `${baseDir}thumbnail.${thumbnailExtensions[extensionIndex]}`;
+                extensionIndex += 1;
+            };
+
+            image.addEventListener('load', () => {
+                image.style.display = 'block';
+            });
+
+            image.addEventListener('error', tryNextThumbnail);
+
+            tryNextThumbnail();
+        });
+    </script>
 </body>
 </html>

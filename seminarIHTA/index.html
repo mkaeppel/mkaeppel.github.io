@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Complex Image Method for Urban Scenarios | Melchior Käppel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fafafa;
+        }
+
+        header {
+            background: white;
+            padding: 2rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .project-header {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .header-content {
+            flex: 1;
+        }
+
+        .project-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-subtitle {
+            font-size: 1.2rem;
+            color: #7f8c8d;
+            margin-bottom: 2rem;
+        }
+
+        .project-description {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 3rem;
+        }
+
+        .project-description h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .project-description p {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .pdf-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .pdf-embed {
+            width: 100%;
+            height: 90vh;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .pdf-embed {
+                height: 70vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="name">Melchior Käppel</div>
+        <a href="../index.html" class="back-link">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+            </svg>
+            Back
+        </a>
+    </header>
+
+    <main>
+        <div class="project-header">
+            <div class="header-content">
+                <h1 class="project-title">The Complex Image Method for Urban Scenarios</h1>
+                <p class="project-subtitle">Seminar Project at the Institute for Hearing Technology and Acoustics | RWTH Aachen University</p>
+            </div>
+        </div>
+
+        <div class="project-description">
+            <h2>Project Overview</h2>
+            <p>This project investigates ground effects in outdoor sound propagation and how they can be modeled more accurately in urban and outdoor environments. 
+                Classical image-source approaches based on plane-wave reflection often fail to explain real-world phenomena in scenarios where sources and 
+                receivers are close to the ground and ground impedance plays a significant role. Measurements outdoors showed surprising effects such as 
+                shifted interference minima, low-frequency amplification, and broad attenuation dips observed over porous ground surfaces.
+            </p>
+
+            <p>   
+                In this work, the Complex Image Method is investigated as an advanced model for sound reflection at finite-impedance ground surfaces. 
+                The underlying theory of spherical wave propagation in outdoor environments is derived and compared to the classical plane-wave reflection model. 
+                The Complex Image Method provides the best agreement with measured data, especially for low source/receiver heights and shallow grazing angles.
+            </p>
+            <p>
+                The work was conducted as part of a seminar project at the Institute for Hearing Technology and Acoustics at RWTH Aachen University supervised Pascal Palenda, M.Sc. and Prof. Dr. Michael Vorländer.
+            </p>
+        </div>
+
+        <div class="pdf-container">
+            <embed src="./The complex image method for urban scenarios. Melchior Kaeppel.pdf" class="pdf-embed" type="application/pdf">
+        </div>
+    </main>
+</body>
+</html>
