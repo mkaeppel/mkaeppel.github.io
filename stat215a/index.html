@@ -110,12 +110,8 @@
             width: 100%;
             height: 200px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
+            position: relative;
+            overflow: hidden;
         }
 
         .project-card:nth-child(2) .project-image {
@@ -132,6 +128,14 @@
 
         .project-card:nth-child(5) .project-image {
             background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: none;
         }
 
         .project-content {
@@ -200,7 +204,9 @@
 
         <div class="projects-grid">
             <a href="./1/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./1/">
+                    <img alt="Stat 215A lab 1 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">PECARN Traumatic Brain Injury Analysis</h3>
                     <p class="project-description">Exploratory analysis of pediatric head trauma data to identify predictors of clinically-important TBI and develop decision rules for CT scanning.</p>
@@ -208,7 +214,9 @@
             </a>
 
             <a href="./2/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./2/">
+                    <img alt="Stat 215A lab 2 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Dialectometry and Linguistic Variation</h3>
                     <p class="project-description">Analyzing U.S. dialect patterns using dimensionality reduction (PCA, NMF, t-SNE) and clustering methods to identify regional linguistic clusters.</p>
@@ -216,7 +224,9 @@
             </a>
 
             <a href="./3/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./3/">
+                    <img alt="Stat 215A lab 3 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Parallelizing k-means Clustering</h3>
                     <p class="project-description">Implementing efficient similarity functions and stability-based clustering to determine optimal number of clusters in linguistic data.</p>
@@ -224,7 +234,9 @@
             </a>
 
             <a href="./4/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./4/">
+                    <img alt="Stat 215A lab 4 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">MISR Cloud Detection with Deep Learning</h3>
                     <p class="project-description">Building CNN autoencoders and ensemble models to classify Arctic cloud pixels from NASA satellite imagery using transfer learning.</p>
@@ -232,7 +244,9 @@
             </a>
 
             <a href="./5/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./5/">
+                    <img alt="Stat 215A lab 5 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Modeling Brain Responses to Natural Language</h3>
                     <p class="project-description">Evaluating static and contextual word embeddings with voxel-wise encoding models to understand how semantic context is represented in human cortex.</p>
@@ -240,5 +254,31 @@
             </a>
         </div>
     </main>
+    <script>
+        const thumbnailExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+        document.querySelectorAll('.project-image[data-thumbnail-dir]').forEach((container) => {
+            const image = container.querySelector('img');
+            const baseDir = container.dataset.thumbnailDir;
+            let extensionIndex = 0;
+
+            const tryNextThumbnail = () => {
+                if (extensionIndex >= thumbnailExtensions.length) {
+                    return;
+                }
+
+                image.src = `${baseDir}thumbnail.${thumbnailExtensions[extensionIndex]}`;
+                extensionIndex += 1;
+            };
+
+            image.addEventListener('load', () => {
+                image.style.display = 'block';
+            });
+
+            image.addEventListener('error', tryNextThumbnail);
+
+            tryNextThumbnail();
+        });
+    </script>
 </body>
 </html>

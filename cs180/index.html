@@ -94,12 +94,8 @@
             width: 100%;
             height: 200px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            font-weight: bold;
+            position: relative;
+            overflow: hidden;
         }
 
         .project-card:nth-child(2) .project-image {
@@ -120,6 +116,14 @@
 
         .project-card:nth-child(6) .project-image {
             background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: none;
         }
 
         .project-content {
@@ -188,7 +192,9 @@
                 <!-- <div class="project-image">
                     <img src="./images/project1.jpg" alt="Project 1" style="width: 100%; height: 100%; object-fit: cover;">
                 </div> -->
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./0/">
+                    <img alt="CS 180 project 0 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Perspective and Focal Length</h3>
                     <p class="project-description">Exploring perspective and focal length through selfies, architectural photography, and the dolly zoom effect.</p>
@@ -196,7 +202,9 @@
             </a>
 
             <a href="./1/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./1/">
+                    <img alt="CS 180 project 1 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Iamge Pyramids</h3>
                     <p class="project-description">Colorizing Prokudin-Gorskii's glass plate images by aligning RGB channels using image pyramids.</p>
@@ -204,7 +212,9 @@
             </a>
 
             <a href="./2/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./2/">
+                    <img alt="CS 180 project 2 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Filters and Frequencies</h3>
                     <p class="project-description">Creating hybrid images and exploring multiresolution blending with Gaussian and Laplacian pyramids.</p>
@@ -212,7 +222,9 @@
             </a>
 
             <a href="./3/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./3/">
+                    <img alt="CS 180 project 3 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Photo stitching</h3>
                     <p class="project-description">Creating Panoramas through homographies, feature matching and blending techniques.</p>
@@ -220,7 +232,9 @@
             </a>
 
             <a href="./4/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./4/">
+                    <img alt="CS 180 project 4 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Neural Radiance Fields</h3>
                     <p class="project-description">Implementing NeRF to synthesize novel views of scenes using neural networks and volumetric rendering.</p>
@@ -228,7 +242,9 @@
             </a>
 
             <a href="./5/index.html" class="project-card">
-                <div class="project-image"></div>
+                <div class="project-image" data-thumbnail-dir="./5/">
+                    <img alt="CS 180 project 5 thumbnail">
+                </div>
                 <div class="project-content">
                     <h3 class="project-title">Diffusion Models</h3>
                     <p class="project-description">Implementing diffusion-based image generation and exploring denoising techniques.</p>
@@ -236,5 +252,31 @@
             </a>
         </div>
     </main>
+    <script>
+        const thumbnailExtensions = ['jpg', 'jpeg', 'png', 'webp', 'gif'];
+
+        document.querySelectorAll('.project-image[data-thumbnail-dir]').forEach((container) => {
+            const image = container.querySelector('img');
+            const baseDir = container.dataset.thumbnailDir;
+            let extensionIndex = 0;
+
+            const tryNextThumbnail = () => {
+                if (extensionIndex >= thumbnailExtensions.length) {
+                    return;
+                }
+
+                image.src = `${baseDir}thumbnail.${thumbnailExtensions[extensionIndex]}`;
+                extensionIndex += 1;
+            };
+
+            image.addEventListener('load', () => {
+                image.style.display = 'block';
+            });
+
+            image.addEventListener('error', tryNextThumbnail);
+
+            tryNextThumbnail();
+        });
+    </script>
 </body>
 </html>
