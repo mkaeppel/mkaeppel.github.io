@@ -118,20 +118,11 @@
         }
 
         .project-description p:last-child {
-            margin-bottom: 0;
+            margin-bottom: 1.5rem;
         }
 
-        .pdf-container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-
-        .pdf-embed {
-            width: 100%;
-            height: 90vh;
-            border: none;
+        .project-description .paper-link {
+            margin-top: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -149,10 +140,6 @@
 
             .project-title {
                 font-size: 2rem;
-            }
-
-            .pdf-embed {
-                height: 70vh;
             }
         }
     </style>
@@ -174,24 +161,21 @@
                 <h1 class="project-title">Investigations on reproduction methods using irregular near-field loudspeaker arrays</h1>
                 <p class="project-subtitle">Bachelor's Thesis at the Institute for Hearing Technology and Acoustics | RWTH Aachen University</p>
             </div>
-            <a href="https://pub.dega-akustik.de/DAGA_2024/files/upload/paper/293.pdf" class="paper-link" target="_blank" rel="noopener noreferrer">
-                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M14 3v2h3.59L7 15.59 8.41 17 19 6.41V10h2V3zM5 5h5V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-5h-2v5H5V5z"/>
-                </svg>
-                Open Paper
-            </a>
         </div>
 
         <div class="project-description">
             <h2>Project Overview</h2>
             <p>A frequency-dependent decoding approach was derived and implemented to account for varying loudspeaker distances and near field effects. Mode-matching, regularized, and energy-preserving decoders were evaluated in terms of synthesis accuracy and spatial reproduction performance for different array configurations.</p>
-            <p>The work was supervised by Dr. Marco Berzborn and Prof. Dr. Michael Vorländer and later implemented at the Institute for Work and Engineering Psychology at RWTH Aachen University.</p>
-            <p>The paper is in German, but an English version is available upon request.</p>
+            <p>The work was later implemented at the Institute for Work and Engineering Psychology at RWTH Aachen University.</p>
+            <p>The paper is in German, but I'm happy to discuss and answer any questions you might have.</p>
+            <a href="https://pub.dega-akustik.de/DAGA_2024/files/upload/paper/293.pdf" class="paper-link" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14 3v2h3.59L7 15.59 8.41 17 19 6.41V10h2V3zM5 5h5V3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-5h-2v5H5V5z"/>
+                </svg>
+                Read paper on pub.dega-akustik.de
+            </a>
         </div>
 
-        <div class="pdf-container">
-            <embed src="https://pub.dega-akustik.de/DAGA_2024/files/upload/paper/293.pdf" class="pdf-embed" type="application/pdf">
-        </div>
     </main>
 </body>
 </html>
